@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/projects';
 ---
 
 <BaseLayout title="Portofolio — Akim">
@@ -8,57 +9,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="page-label">Portofolio</p>
       <h1>Yang sedang gue kerjakan</h1>
       <p class="page-lead">
-        Proyek pribadi, eksperimen, dan catatan yang gue bangun.
+        Proyek pribadi, eksperimen, dan catatan yang gue bangun sambil belajar.
       </p>
     </header>
 
     <section class="project-list">
-      <article class="project">
-        <div class="project-head">
-          <h2>akim.web.id</h2>
-          <span class="project-status">Live</span>
-        </div>
-        <p>
-          Website pribadi yang sedang lu lihat ini. Dibuat dengan Astro v4,
-          HTML, dan CSS murni. Deploy di Vercel dengan auto-deploy dari GitHub.
-        </p>
-        <div class="project-tags">
-          <span class="tag">Astro</span>
-          <span class="tag">HTML/CSS</span>
-          <span class="tag">Vercel</span>
-        </div>
-      </article>
+      {projects.map((project) => (
+        <article class="project">
+          <div class="project-head">
+            <h2>{project.name}</h2>
+            <span class={`status status-${project.status.toLowerCase().replace(' ', '-')}`}>
+              {project.status}
+            </span>
+          </div>
 
-      <article class="project">
-        <div class="project-head">
-          <h2>Bot Trading Sederhana</h2>
-          <span class="project-status">In progress</span>
-        </div>
-        <p>
-          Bot Python untuk memantau harga crypto di Binance dan kirim notifikasi
-          ke Telegram saat kondisi tertentu terpenuhi.
-        </p>
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">Binance API</span>
-          <span class="tag">Telegram Bot</span>
-        </div>
-      </article>
+          <p class="project-desc">{project.description}</p>
 
-      <article class="project">
-        <div class="project-head">
-          <h2>Catatan Kuliah Informatika</h2>
-          <span class="project-status">Ongoing</span>
-        </div>
-        <p>
-          Kumpulan catatan algoritma, struktur data, dan basis data yang gue
-          tulis selama kuliah. Ditulis dalam Markdown, di-host di GitHub.
-        </p>
-        <div class="project-tags">
-          <span class="tag">Markdown</span>
-          <span class="tag">GitHub</span>
-        </div>
-      </article>
+          <div class="project-meta">
+            <div class="meta-block">
+              <span class="meta-label">Tentang</span>
+              <p class="meta-value">{project.why}</p>
+            </div>
+            <div class="meta-block">
+              <span class="meta-label">Yang gue pelajari</span>
+              <p class="meta-value">{project.learned.join(' · ')}</p>
+            </div>
+          </div>
+
+          <div class="project-tags">
+            {project.tech.map((t) => <span class="tag">{t}</span>)}
+          </div>
+
+          {(project.github || project.demo) && (
+            <div class="project-links">
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener">GitHub →</a>
+              )}
+              {project.demo && (
+                <a href={project.demo} target="_blank" rel="noopener">Live Demo →</a>
+              )}
+            </div>
+          )}
+        </article>
+      ))}
     </section>
   </div>
 </BaseLayout>
@@ -69,7 +62,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-bottom: 1px solid var(--border-subtle);
     margin-bottom: var(--space-12);
   }
-
   .page-label {
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -78,12 +70,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: var(--space-3);
     font-weight: 500;
   }
-
   .page-header h1 {
     font-size: 2.25rem;
     margin-bottom: var(--space-3);
   }
-
   .page-lead {
     font-size: 1.0625rem;
     color: var(--text-tertiary);
@@ -93,14 +83,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .project-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-12);
   }
 
   .project {
     padding-bottom: var(--space-8);
     border-bottom: 1px solid var(--border-subtle);
   }
-
   .project:last-child {
     border-bottom: none;
     padding-bottom: 0;
@@ -113,7 +102,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     gap: var(--space-4);
     margin-bottom: var(--space-3);
   }
-
   .project h2 {
     font-size: 1.125rem;
     font-weight: 600;
@@ -121,27 +109,67 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--text-primary);
   }
 
-  .project-status {
+  .status {
     font-size: 0.6875rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--positive);
+    letter-spacing: 0.05em;
     font-weight: 500;
+    white-space: nowrap;
+  }
+  .status-live {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--positive);
+  }
+  .status-in-progress {
+    background: rgba(79, 139, 255, 0.1);
+    color: var(--accent);
+  }
+  .status-ongoing {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
   }
 
-  .project p {
+  .project-desc {
     color: var(--text-secondary);
     font-size: 0.9375rem;
     line-height: 1.7;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .project-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+  .meta-block {
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--border-default);
+  }
+  .meta-label {
+    display: block;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-1);
+    font-weight: 500;
+  }
+  .meta-value {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
   }
 
   .project-tags {
     display: flex;
     gap: var(--space-2);
     flex-wrap: wrap;
+    margin-bottom: var(--space-4);
   }
-
   .tag {
     font-size: 0.75rem;
     padding: 0.25rem 0.625rem;
@@ -150,5 +178,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-radius: var(--radius-sm);
     color: var(--text-tertiary);
     font-family: var(--font-mono);
+  }
+
+  .project-links {
+    display: flex;
+    gap: var(--space-4);
+    font-size: 0.8125rem;
+  }
+  .project-links a {
+    color: var(--text-tertiary);
+  }
+  .project-links a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .project-meta {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .project-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
   }
 </style>
