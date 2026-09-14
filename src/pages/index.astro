@@ -1,86 +1,113 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const nama = "Akim";
-const tagline = "Mahasiswa Informatika. Fokus di crypto, forex, dan Web3 sejak 2020.";
+import { profile } from '../data/profile';
+import { learning } from '../data/learning';
+import { workingOn } from '../data/working-on';
+import { articles } from '../data/articles';
 ---
 
-<BaseLayout title="Akim — Crypto, Forex, Web3">
+<BaseLayout title="Akim — Informatics Student, Crypto & Web3">
   <div class="container">
 
-    <div class="ticker">
+    <!-- Ticker Crypto -->
+    <div class="ticker" id="ticker">
       <div class="ticker-item">
         <span class="ticker-symbol">BTC/USD</span>
-        <span class="ticker-price" id="btc-price">$--,---</span>
-        <span class="ticker-change" id="btc-change">--%</span>
+        <span class="ticker-price" id="btc-price">Loading...</span>
+        <span class="ticker-change" id="btc-change"></span>
       </div>
       <div class="ticker-item">
         <span class="ticker-symbol">ETH/USD</span>
-        <span class="ticker-price" id="eth-price">$--,---</span>
-        <span class="ticker-change" id="eth-change">--%</span>
+        <span class="ticker-price" id="eth-price">Loading...</span>
+        <span class="ticker-change" id="eth-change"></span>
       </div>
       <div class="ticker-item">
         <span class="ticker-symbol">SOL/USD</span>
-        <span class="ticker-price" id="sol-price">$---.--</span>
-        <span class="ticker-change" id="sol-change">--%</span>
+        <span class="ticker-price" id="sol-price">Loading...</span>
+        <span class="ticker-change" id="sol-change"></span>
       </div>
       <div class="ticker-item">
         <span class="ticker-symbol">BNB/USD</span>
-        <span class="ticker-price" id="bnb-price">$---.--</span>
-        <span class="ticker-change" id="bnb-change">--%</span>
+        <span class="ticker-price" id="bnb-price">Loading...</span>
+        <span class="ticker-change" id="bnb-change"></span>
       </div>
+      <div class="ticker-updated" id="ticker-updated"></div>
     </div>
 
+    <!-- Hero -->
     <section class="hero">
-      <p class="hero-label">Personal website</p>
-      <h1>
-        Halo, gue {nama}.
-        <br />
-        <span class="hero-dim">Nulis soal crypto, forex, dan Web3.</span>
-      </h1>
-      <p class="lead">
-        {tagline}
+      <h1>Haloo, gue {profile.name}. 👋</h1>
+      <p class="hero-tagline">
+        {profile.tagline}
       </p>
-      <p>
-        Di sini gue nulis catatan, analisis teknikal, dan opini soal pasar crypto
-        dan Web3. Sesekali catatan kuliah Informatika.
+      <p class="hero-desc">
+        Di sini gue nulis catatan belajar, eksperimen kecil, dan opini soal
+        programming, crypto, blockchain, Web3, dan trading. Sesekali catatan
+        kuliah Informatika.
       </p>
-      <div class="cta">
-        <a href="/blog" class="btn">Baca Blog →</a>
-        <a href="/about" class="btn-secondary">Tentang Gue</a>
+      <div class="hero-cta">
+        <a href="/portfolio" class="btn">Lihat Project →</a>
+        <a href="/blog" class="btn-secondary">Baca Catatan</a>
       </div>
     </section>
 
-    <section class="recent">
-      <div class="section-header">
-        <h2>Tulisan Terbaru</h2>
+    <!-- Currently Learning -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Currently Learning</h2>
+        <p class="section-sub">Yang lagi gue pelajarin</p>
+      </div>
+      <ul class="learning-list">
+        {learning.map((item) => (
+          <li>
+            <span class="learning-name">{item.name}</span>
+            <span class="learning-note">{item.note}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Currently Working On -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Yang lagi gue kerjain</h2>
+        <p class="section-sub">Project dan aktivitas saat ini</p>
+      </div>
+      <ul class="working-list">
+        {workingOn.map((item) => (
+          <li>
+            <div class="working-head">
+              <span class="working-title">{item.title}</span>
+              <span class={`status status-${item.status.toLowerCase().replace(' ', '-')}`}>
+                {item.status}
+              </span>
+            </div>
+            <p class="working-note">{item.note}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Recent Posts -->
+    <section class="section">
+      <div class="section-head-row">
+        <h2>Catatan terbaru</h2>
         <a href="/blog" class="section-link">Lihat semua →</a>
       </div>
       <div class="post-list">
-        <a href="/posts/analisis-bitcoin-q1-2026" class="post-row">
-          <div class="post-meta">
-            <span class="post-date">15 Jan 2026</span>
-            <span class="post-tag">Crypto</span>
-          </div>
-          <h3>Analisis Bitcoin Q1 2026</h3>
-          <p>Prediksi pergerakan BTC berdasarkan data on-chain dan analisis teknikal.</p>
-        </a>
-        <a href="/posts/cara-pakai-metamask" class="post-row">
-          <div class="post-meta">
-            <span class="post-date">22 Jan 2026</span>
-            <span class="post-tag">Web3</span>
-          </div>
-          <h3>Cara Pakai MetaMask untuk Pemula</h3>
-          <p>Panduan lengkap setup wallet MetaMask, dari install sampai transaksi pertama.</p>
-        </a>
-        <a href="/posts/belajar-candlestick" class="post-row">
-          <div class="post-meta">
-            <span class="post-date">1 Feb 2026</span>
-            <span class="post-tag">Trading</span>
-          </div>
-          <h3>Belajar Candlestick untuk Pemula</h3>
-          <p>Pola candlestick paling penting yang harus dikuasai setiap trader.</p>
-        </a>
+        {articles.slice(0, 3).map((post) => (
+          <a href={`/posts/${post.slug}`} class="post-row">
+            <div class="post-meta">
+              <span>{post.dateLabel}</span>
+              <span class="post-dot">·</span>
+              <span class="post-tag">{post.category}</span>
+              <span class="post-dot">·</span>
+              <span>{post.readTime}</span>
+            </div>
+            <h3>{post.title}</h3>
+            <p>{post.description}</p>
+          </a>
+        ))}
       </div>
     </section>
 
@@ -88,105 +115,195 @@ const tagline = "Mahasiswa Informatika. Fokus di crypto, forex, dan Web3 sejak 2
 </BaseLayout>
 
 <style>
+  /* ---------- TICKER ---------- */
+  .ticker {
+    display: flex;
+    gap: var(--space-6);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.8125rem;
+    overflow-x: auto;
+    margin-bottom: var(--space-12);
+    position: relative;
+  }
+  .ticker-updated {
+    font-size: 0.6875rem;
+    color: var(--text-quaternary);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ---------- HERO ---------- */
   .hero {
     padding: var(--space-8) 0 var(--space-16);
     max-width: 640px;
   }
-
-  .hero-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-tertiary);
-    margin-bottom: var(--space-4);
-    font-weight: 500;
-  }
-
   .hero h1 {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     line-height: 1.15;
-    margin-bottom: var(--space-6);
     letter-spacing: -0.03em;
-  }
-
-  .hero-dim {
-    color: var(--text-tertiary);
-    font-weight: 500;
-  }
-
-  .hero .lead {
-    font-size: 1.0625rem;
     margin-bottom: var(--space-4);
-    color: var(--text-secondary);
   }
-
-  .hero .cta {
+  .hero-tagline {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+  }
+  .hero-cta {
     display: flex;
     gap: var(--space-3);
-    margin-top: var(--space-6);
     flex-wrap: wrap;
   }
 
-  .section-header {
+  /* ---------- SECTIONS ---------- */
+  .section {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .section-head {
+    margin-bottom: var(--space-6);
+  }
+  .section-head h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-1) 0;
+  }
+  .section-sub {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+  .section-head-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: var(--space-6);
   }
-
-  .section-header h2 {
-    margin: 0;
+  .section-head-row h2 {
     font-size: 1.125rem;
     font-weight: 600;
+    margin: 0;
   }
-
   .section-link {
     font-size: 0.8125rem;
     color: var(--text-tertiary);
   }
+  .section-link:hover { color: var(--accent); }
 
-  .section-link:hover {
-    color: var(--accent);
+  /* ---------- LEARNING ---------- */
+  .learning-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3) var(--space-6);
+  }
+  .learning-list li {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .learning-name {
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .learning-note {
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
   }
 
+  /* ---------- WORKING ON ---------- */
+  .working-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .working-list li {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .working-list li:last-child { border-bottom: none; }
+  .working-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-1);
+  }
+  .working-title {
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .working-note {
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .status {
+    font-size: 0.6875rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .status-in-progress {
+    background: rgba(79, 139, 255, 0.1);
+    color: var(--accent);
+  }
+  .status-learning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+  }
+  .status-completed {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--positive);
+  }
+
+  /* ---------- POSTS ---------- */
   .post-list {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid var(--border-subtle);
   }
-
   .post-row {
     display: block;
-    padding: var(--space-6) 0;
+    padding: var(--space-5, 1.25rem) 0;
     border-bottom: 1px solid var(--border-subtle);
     text-decoration: none;
     color: inherit;
     transition: padding 0.15s ease;
   }
-
-  .post-row:hover {
-    padding-left: var(--space-3);
-    text-decoration: none;
-  }
-
-  .post-row:hover h3 {
-    color: var(--accent);
-  }
-
+  .post-row:last-child { border-bottom: none; }
+  .post-row:hover { padding-left: var(--space-3); text-decoration: none; }
+  .post-row:hover h3 { color: var(--accent); }
   .post-meta {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-2);
+    align-items: center;
     font-size: 0.75rem;
     color: var(--text-tertiary);
     margin-bottom: var(--space-2);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-
-  .post-tag {
-    color: var(--accent);
-  }
-
+  .post-tag { color: var(--accent); }
+  .post-dot { color: var(--text-quaternary); }
   .post-row h3 {
     font-size: 1.0625rem;
     font-weight: 600;
@@ -194,34 +311,44 @@ const tagline = "Mahasiswa Informatika. Fokus di crypto, forex, dan Web3 sejak 2
     color: var(--text-primary);
     transition: color 0.15s ease;
   }
-
   .post-row p {
     font-size: 0.9375rem;
     color: var(--text-tertiary);
     margin: 0;
+    line-height: 1.6;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 640px) {
-    .hero h1 {
-      font-size: 1.875rem;
-    }
-    .hero .lead {
-      font-size: 1rem;
-    }
+    .hero h1 { font-size: 1.75rem; }
+    .hero-tagline { font-size: 1rem; }
+    .learning-list { grid-template-columns: 1fr; }
+    .ticker-updated { display: none; }
+    .working-head { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
   }
 </style>
 
 <script>
+  const API = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true';
+
+  function setUnavailable() {
+    ['btc-price', 'eth-price', 'sol-price', 'bnb-price'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = 'Data unavailable';
+    });
+  }
+
   async function loadPrices() {
     try {
-      const res = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true'
-      );
+      const res = await fetch(API);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
 
       const update = (id, priceId, changeId, decimals) => {
-        const p = data[id].usd;
-        const c = data[id].usd_24h_change;
+        const p = data[id]?.usd;
+        const c = data[id]?.usd_24h_change;
+        if (p == null || c == null) return;
+
         const priceEl = document.getElementById(priceId);
         const changeEl = document.getElementById(changeId);
 
@@ -243,8 +370,17 @@ const tagline = "Mahasiswa Informatika. Fokus di crypto, forex, dan Web3 sejak 2
       update('ethereum', 'eth-price', 'eth-change', 0);
       update('solana', 'sol-price', 'sol-change', 2);
       update('binancecoin', 'bnb-price', 'bnb-change', 2);
+
+      const updatedEl = document.getElementById('ticker-updated');
+      if (updatedEl) {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        updatedEl.textContent = `Updated ${hh}:${mm}`;
+      }
     } catch (e) {
       console.warn('Price fetch failed:', e);
+      setUnavailable();
     }
   }
 
