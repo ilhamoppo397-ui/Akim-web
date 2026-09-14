@@ -5,52 +5,147 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Tentang — Akim">
   <div class="container">
     <article class="page">
-      <h1>Tentang Gue</h1>
+      <header class="page-header">
+        <p class="page-label">Tentang</p>
+        <h1>Akim</h1>
+        <p class="page-lead">
+          Mahasiswa Informatika. Fokus di crypto, forex, dan Web3 sejak 2020.
+        </p>
+      </header>
 
-      <p>
-        Halo. Nama gue Akim. Mahasiswa Informatika, trader crypto, dan
-        penulis yang suka nulis soal Web3, blockchain, dan forex.
-      </p>
+      <section class="prose">
+        <p>
+          Halo. Nama gue Akim. Mahasiswa Informatika, trader crypto, dan
+          penulis yang suka nulis soal Web3, blockchain, dan forex.
+        </p>
 
-      <p>
-        Gue mulai tertarik sama crypto sekitar tahun 2020. Dari situ gue
-        belajar soal blockchain, smart contract, dan akhirnya ke dunia Web3.
-        Sekarang gue nulis catatan, analisis, dan opini di website ini.
-      </p>
+        <p>
+          Gue mulai tertarik sama crypto sekitar tahun <strong>2020</strong>.
+          Dari situ gue belajar soal blockchain, smart contract, dan akhirnya
+          ke dunia Web3. Sekarang gue nulis catatan, analisis, dan opini di
+          website ini.
+        </p>
 
-      <h2>Yang Gue Pelajari</h2>
-      <ul>
-        <li>Blockchain & cryptocurrency</li>
-        <li>Analisis teknikal forex & crypto</li>
-        <li>Web development (HTML, CSS, JavaScript, Astro)</li>
-        <li>Python untuk data analysis</li>
-      </ul>
+        <h2>Yang Gue Pelajari</h2>
+        <ul class="skill-list">
+          <li>Blockchain & cryptocurrency</li>
+          <li>Analisis teknikal forex & crypto</li>
+          <li>Web development — HTML, CSS, JavaScript, Astro</li>
+          <li>Python untuk data analysis</li>
+        </ul>
 
-      <h2>Kontak</h2>
-      <p>
-        Email: <a href="mailto:akimhm06@gmail.com">akimhm06@gmail.com</a><br />
-        Instagram: <a href="https://instagram.com/akimhm_" target="_blank" rel="noopener">@akimhm_</a><br />
-        Telegram: <a href="https://t.me/spederman0" target="_blank" rel="noopener">@spederman0</a><br />
-        GitHub: <a href="https://github.com/ilhamoppo397-ui" target="_blank" rel="noopener">ilhamoppo397-ui</a>
-      </p>
+        <h2>Kontak</h2>
+        <ul class="contact-list">
+          <li>
+            <span class="contact-label">Email</span>
+            <a href="mailto:akimhm06@gmail.com">akimhm06@gmail.com</a>
+          </li>
+          <li>
+            <span class="contact-label">Instagram</span>
+            <a href="https://instagram.com/akimhm_" target="_blank" rel="noopener">@akimhm_</a>
+          </li>
+          <li>
+            <span class="contact-label">Telegram</span>
+            <a href="https://t.me/spederman0" target="_blank" rel="noopener">@spederman0</a>
+          </li>
+          <li>
+            <span class="contact-label">GitHub</span>
+            <a href="https://github.com/ilhamoppo397-ui" target="_blank" rel="noopener">ilhamoppo397-ui</a>
+          </li>
+        </ul>
+      </section>
     </article>
   </div>
 </BaseLayout>
 
 <style>
-  .page {
-    max-width: 640px;
+  .page { max-width: 640px; }
+
+  .page-header {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-12);
   }
-  .page h2 {
-    margin-top: 2.5rem;
+
+  .page-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
   }
-  .page ul {
-    list-style: disc;
-    padding-left: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-dim);
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-3);
   }
-  .page ul li {
-    margin-bottom: 0.5rem;
+
+  .page-lead {
+    font-size: 1.0625rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+
+  .prose p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+    line-height: 1.75;
+  }
+
+  .prose h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+    color: var(--text-primary);
+  }
+
+  .prose strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .skill-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--space-6);
+  }
+
+  .skill-list li {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .skill-list li:last-child {
+    border-bottom: none;
+  }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .contact-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.9375rem;
+  }
+
+  .contact-list li:last-child {
+    border-bottom: none;
+  }
+
+  .contact-label {
+    color: var(--text-tertiary);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 </style>

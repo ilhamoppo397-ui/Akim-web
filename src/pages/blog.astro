@@ -1,65 +1,148 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = [
+  {
+    slug: 'analisis-bitcoin-q1-2026',
+    title: 'Analisis Bitcoin Q1 2026',
+    description: 'Prediksi pergerakan BTC berdasarkan data on-chain dan analisis teknikal.',
+    date: '2026-01-15',
+    dateLabel: '15 Jan 2026',
+    tag: 'Crypto',
+    readTime: '5 menit baca',
+  },
+  {
+    slug: 'cara-pakai-metamask',
+    title: 'Cara Pakai MetaMask untuk Pemula',
+    description: 'Panduan lengkap setup wallet MetaMask, dari install sampai transaksi pertama.',
+    date: '2026-01-22',
+    dateLabel: '22 Jan 2026',
+    tag: 'Web3',
+    readTime: '7 menit baca',
+  },
+  {
+    slug: 'belajar-candlestick',
+    title: 'Belajar Candlestick untuk Pemula',
+    description: 'Pola candlestick paling penting yang harus dikuasai setiap trader.',
+    date: '2026-02-01',
+    dateLabel: '1 Feb 2026',
+    tag: 'Trading',
+    readTime: '6 menit baca',
+  },
+];
 ---
 
 <BaseLayout title="Blog — Akim">
   <div class="container">
-    <article class="page">
-      <h1>Blog</h1>
-      <p class="subtitle">Catatan, analisis, dan opini soal crypto, forex, dan Web3.</p>
+    <header class="page-header">
+      <p class="page-label">Blog</p>
+      <h1>Catatan & analisis</h1>
+      <p class="page-lead">
+        Tulisan soal crypto, forex, Web3, dan kadang catatan kuliah Informatika.
+      </p>
+    </header>
 
-      <div class="posts">
-        <a href="/posts/analisis-bitcoin-q1-2026" class="post-card">
-          <h3>Analisis Bitcoin Q1 2026</h3>
-          <p>Prediksi pergerakan BTC berdasarkan data on-chain dan analisis teknikal.</p>
-          <span class="meta">15 Januari 2026 · 5 menit baca</span>
+    <div class="post-list">
+      {posts.map((post) => (
+        <a href={`/posts/${post.slug}`} class="post-row">
+          <div class="post-meta">
+            <span class="post-date">{post.dateLabel}</span>
+            <span class="post-dot">·</span>
+            <span class="post-tag">{post.tag}</span>
+            <span class="post-dot">·</span>
+            <span class="post-read">{post.readTime}</span>
+          </div>
+          <h2 class="post-title">{post.title}</h2>
+          <p class="post-desc">{post.description}</p>
         </a>
-
-        <a href="/posts/cara-pakai-metamask" class="post-card">
-          <h3>Cara Pakai MetaMask untuk Pemula</h3>
-          <p>Panduan lengkap setup wallet MetaMask, dari install sampai transaksi pertama.</p>
-          <span class="meta">22 Januari 2026 · 7 menit baca</span>
-        </a>
-
-        <a href="/posts/belajar-candlestick" class="post-card">
-          <h3>Belajar Candlestick untuk Pemula</h3>
-          <p>Pola candlestick paling penting yang harus dikuasai setiap trader.</p>
-          <span class="meta">1 Februari 2026 · 6 menit baca</span>
-        </a>
-      </div>
-    </article>
+      ))}
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
+  .page-header {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-subtle);
   }
-  .posts {
-    display: grid;
-    gap: 1.5rem;
+
+  .page-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
   }
-  .post-card {
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .page-lead {
+    font-size: 1.0625rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .post-row {
     display: block;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: border-color 0.15s, transform 0.15s;
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: inherit;
+    transition: padding 0.15s ease;
   }
-  .post-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
+
+  .post-row:hover {
+    padding-left: var(--space-3);
+    text-decoration: none;
   }
-  .post-card h3 {
-    color: var(--text);
-    margin-bottom: 0.5rem;
+
+  .post-row:hover .post-title {
+    color: var(--accent);
   }
-  .post-card p {
-    margin-bottom: 1rem;
+
+  .post-meta {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
-  .meta {
-    font-size: 0.85rem;
-    color: var(--text-dim);
+
+  .post-tag {
+    color: var(--accent);
+  }
+
+  .post-dot {
+    color: var(--text-quaternary);
+  }
+
+  .post-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    transition: color 0.15s ease;
+  }
+
+  .post-desc {
+    font-size: 0.9375rem;
+    color: var(--text-tertiary);
+    margin: 0;
+    line-height: 1.6;
   }
 </style>
