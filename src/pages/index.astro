@@ -2,51 +2,252 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const nama = "Akim";
-const tagline = "Mahasiswa. Crypto Enthusiast sejak 2020. Penulis Web3.";
+const tagline = "Mahasiswa Informatika. Fokus di crypto, forex, dan Web3 sejak 2020.";
 ---
 
 <BaseLayout title="Akim — Crypto, Forex, Web3">
   <div class="container">
+
+    <div class="ticker">
+      <div class="ticker-item">
+        <span class="ticker-symbol">BTC/USD</span>
+        <span class="ticker-price" id="btc-price">$--,---</span>
+        <span class="ticker-change" id="btc-change">--%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">ETH/USD</span>
+        <span class="ticker-price" id="eth-price">$--,---</span>
+        <span class="ticker-change" id="eth-change">--%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">SOL/USD</span>
+        <span class="ticker-price" id="sol-price">$---.--</span>
+        <span class="ticker-change" id="sol-change">--%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">BNB/USD</span>
+        <span class="ticker-price" id="bnb-price">$---.--</span>
+        <span class="ticker-change" id="bnb-change">--%</span>
+      </div>
+    </div>
+
     <section class="hero">
-      <h1>Halo, gue {nama}.</h1>
-      <p class="tagline">{tagline}</p>
-      <p class="intro">
-        Selamat datang di website pribadi gue. Di sini gue nulis soal crypto,
-        forex, Web3, dan kadang catatan kuliah Informatika.
+      <p class="hero-label">Personal website</p>
+      <h1>
+        Halo, gue {nama}.
+        <br />
+        <span class="hero-dim">Nulis soal crypto, forex, dan Web3.</span>
+      </h1>
+      <p class="lead">
+        {tagline}
+      </p>
+      <p>
+        Di sini gue nulis catatan, analisis teknikal, dan opini soal pasar crypto
+        dan Web3. Sesekali catatan kuliah Informatika.
       </p>
       <div class="cta">
         <a href="/blog" class="btn">Baca Blog →</a>
         <a href="/about" class="btn-secondary">Tentang Gue</a>
       </div>
     </section>
+
+    <section class="recent">
+      <div class="section-header">
+        <h2>Tulisan Terbaru</h2>
+        <a href="/blog" class="section-link">Lihat semua →</a>
+      </div>
+      <div class="post-list">
+        <a href="/posts/analisis-bitcoin-q1-2026" class="post-row">
+          <div class="post-meta">
+            <span class="post-date">15 Jan 2026</span>
+            <span class="post-tag">Crypto</span>
+          </div>
+          <h3>Analisis Bitcoin Q1 2026</h3>
+          <p>Prediksi pergerakan BTC berdasarkan data on-chain dan analisis teknikal.</p>
+        </a>
+        <a href="/posts/cara-pakai-metamask" class="post-row">
+          <div class="post-meta">
+            <span class="post-date">22 Jan 2026</span>
+            <span class="post-tag">Web3</span>
+          </div>
+          <h3>Cara Pakai MetaMask untuk Pemula</h3>
+          <p>Panduan lengkap setup wallet MetaMask, dari install sampai transaksi pertama.</p>
+        </a>
+        <a href="/posts/belajar-candlestick" class="post-row">
+          <div class="post-meta">
+            <span class="post-date">1 Feb 2026</span>
+            <span class="post-tag">Trading</span>
+          </div>
+          <h3>Belajar Candlestick untuk Pemula</h3>
+          <p>Pola candlestick paling penting yang harus dikuasai setiap trader.</p>
+        </a>
+      </div>
+    </section>
+
   </div>
 </BaseLayout>
 
 <style>
-  .hero { padding: 4rem 0; }
-  .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-  .tagline { font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; }
-  .intro { font-size: 1.05rem; max-width: 600px; margin-bottom: 2.5rem; }
-  .cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
+  .hero {
+    padding: var(--space-8) 0 var(--space-16);
+    max-width: 640px;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
     font-weight: 500;
   }
-  .btn:hover { background: var(--accent-hover); color: white; }
-  .btn-secondary {
-    display: inline-block;
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
+
+  .hero h1 {
+    font-size: 2.75rem;
+    line-height: 1.15;
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.03em;
   }
-  .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
-  @media (max-width: 600px) {
-    .hero h1 { font-size: 2rem; }
-    .tagline { font-size: 1rem; }
+
+  .hero-dim {
+    color: var(--text-tertiary);
+    font-weight: 500;
+  }
+
+  .hero .lead {
+    font-size: 1.0625rem;
+    margin-bottom: var(--space-4);
+    color: var(--text-secondary);
+  }
+
+  .hero .cta {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-6);
+  }
+
+  .section-header h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .section-link {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+
+  .section-link:hover {
+    color: var(--accent);
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .post-row {
+    display: block;
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: inherit;
+    transition: padding 0.15s ease;
+  }
+
+  .post-row:hover {
+    padding-left: var(--space-3);
+    text-decoration: none;
+  }
+
+  .post-row:hover h3 {
+    color: var(--accent);
+  }
+
+  .post-meta {
+    display: flex;
+    gap: var(--space-3);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .post-tag {
+    color: var(--accent);
+  }
+
+  .post-row h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    color: var(--text-primary);
+    transition: color 0.15s ease;
+  }
+
+  .post-row p {
+    font-size: 0.9375rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 {
+      font-size: 1.875rem;
+    }
+    .hero .lead {
+      font-size: 1rem;
+    }
   }
 </style>
+
+<script>
+  async function loadPrices() {
+    try {
+      const res = await fetch(
+        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true'
+      );
+      const data = await res.json();
+
+      const update = (id, priceId, changeId, decimals) => {
+        const p = data[id].usd;
+        const c = data[id].usd_24h_change;
+        const priceEl = document.getElementById(priceId);
+        const changeEl = document.getElementById(changeId);
+
+        if (priceEl) {
+          priceEl.textContent = '$' + p.toLocaleString('en-US', {
+            minimumFractionDigits: decimals,
+            maximumFractionDigits: decimals,
+          });
+        }
+        if (changeEl) {
+          const sign = c >= 0 ? '+' : '';
+          changeEl.textContent = sign + c.toFixed(2) + '%';
+          changeEl.classList.remove('up', 'down');
+          changeEl.classList.add(c >= 0 ? 'up' : 'down');
+        }
+      };
+
+      update('bitcoin', 'btc-price', 'btc-change', 0);
+      update('ethereum', 'eth-price', 'eth-change', 0);
+      update('solana', 'sol-price', 'sol-change', 2);
+      update('binancecoin', 'bnb-price', 'bnb-change', 2);
+    } catch (e) {
+      console.warn('Price fetch failed:', e);
+    }
+  }
+
+  loadPrices();
+  setInterval(loadPrices, 60000);
+</script>
