@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Kontak — Akim">
+  <div class="container">
+    <article class="page">
+      <h1>Kontak</h1>
+      <p class="subtitle">Hubungi gue lewat salah satu channel di bawah.</p>
+
+      <div class="contact-list">
+        <a href="mailto:hello@akim.web.id" class="contact-item">
+          <strong>Email</strong>
+          <span>hello@akim.web.id</span>
+        </a>
+
+        <a href="https://twitter.com/" target="_blank" rel="noopener" class="contact-item">
+          <strong>Twitter / X</strong>
+          <span>@akim</span>
+        </a>
+
+        <a href="https://t.me/" target="_blank" rel="noopener" class="contact-item">
+          <strong>Telegram</strong>
+          <span>@akim</span>
+        </a>
+
+        <a href="https://github.com/" target="_blank" rel="noopener" class="contact-item">
+          <strong>GitHub</strong>
+          <span>github.com/akim</span>
+        </a>
+      </div>
+
+      <h2>Kolaborasi</h2>
+      <p>
+        Gue terbuka untuk kolaborasi, wawancara, atau ngobrol soal crypto dan Web3.
+        Kirim email atau DM di Twitter.
+      </p>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+  .contact-list {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    transition: border-color 0.15s;
+  }
+  .contact-item:hover {
+    border-color: var(--accent);
+  }
+  .contact-item strong {
+    color: var(--text);
+  }
+  .contact-item span {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+  h2 {
+    margin-top: 2.5rem;
+  }
+</style>

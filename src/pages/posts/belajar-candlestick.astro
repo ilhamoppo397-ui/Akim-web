@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Belajar Candlestick untuk Pemula — Akim">
+  <div class="container">
+    <article class="post">
+      <header class="post-header">
+        <h1>Belajar Candlestick untuk Pemula</h1>
+        <p class="meta">1 Februari 2026 · 6 menit baca</p>
+      </header>
+
+      <p>
+        Candlestick adalah cara visualisasi pergerakan harga di chart trading.
+        Setiap candle nunjukin 4 data: Open, High, Low, Close (OHLC) dalam
+        periode waktu tertentu.
+      </p>
+
+      <h2>Anatomi Candlestick</h2>
+      <p>
+        Setiap candle punya <strong>body</strong> (kotak di tengah) dan
+        <strong>wick</strong> (garis tipis di atas & bawah). Body nunjukin
+        selisih open dan close. Wick nunjukin high dan low.
+      </p>
+
+      <h2>Pola Penting</h2>
+
+      <h3>Doji</h3>
+      <p>
+        Body sangat kecil, hampir kayak garis. Menandakan keraguan pasar,
+        sering muncul di titik reversal.
+      </p>
+
+      <h3>Hammer</h3>
+      <p>
+        Body kecil di atas, wick bawah panjang. Sinyal bullish reversal.
+        Muncul setelah downtrend.
+      </p>
+
+      <h3>Shooting Star</h3>
+      <p>
+        Body kecil di bawah, wick atas panjang. Sinyal bearish reversal.
+        Muncul setelah uptrend.
+      </p>
+
+      <h3>Engulfing</h3>
+      <p>
+        Candle yang body-nya "menelan" candle sebelumnya. Bullish engulfing
+        = sinyal naik. Bearish engulfing = sinyal turun.
+      </p>
+
+      <h2>Tips</h2>
+      <ul>
+        <li>Jangan pakai candlestick tanpa konteks tren</li>
+        <li>Gabungkan dengan support & resistance</li>
+        <li>Konfirmasi dengan volume</li>
+        <li>Latihan di akun demo dulu</li>
+      </ul>
+
+      <a href="/blog" class="back">← Kembali ke Blog</a>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .post { max-width: 640px; }
+  .post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .post h2 { margin-top: 2rem; }
+  .post h3 { margin-top: 1.5rem; }
+  .post ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-dim);
+  }
+  .post ul li { margin-bottom: 0.5rem; }
+  .meta {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+  .back {
+    display: inline-block;
+    margin-top: 2rem;
+  }
+</style>

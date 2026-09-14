@@ -1,0 +1,126 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --bg-soft: #141414;
+  --text: #e5e5e5;
+  --text-dim: #a3a3a3;
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --border: #262626;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+html {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding: 3rem 0;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.25rem; }
+
+p { margin-bottom: 1rem; color: var(--text-dim); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover { color: var(--accent-hover); }
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.site-header nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.site-header nav a {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.site-header nav a:hover,
+.site-header nav a.active {
+  color: var(--text);
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+}
+
+.site-footer .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.site-footer .social {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  .site-header nav ul { gap: 1rem; }
+  .header-inner { flex-direction: column; gap: 0.75rem; }
+  .site-footer .container { flex-direction: column; text-align: center; }
+  .site-footer .social { justify-content: center; }
+}

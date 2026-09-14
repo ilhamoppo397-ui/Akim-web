@@ -1,0 +1,31 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/portfolio', label: 'Portofolio' },
+  { href: '/contact', label: 'Kontak' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">Akim</a>
+    <nav>
+      <ul>
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class={currentPath === link.href ? 'active' : ''}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

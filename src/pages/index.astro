@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const nama = "Akim";
+const tagline = "Mahasiswa Informatika. Analis Crypto. Penulis On-Chain.";
+---
+
+<BaseLayout title="Akim — Crypto, Forex, Web3">
+  <div class="container">
+    <section class="hero">
+      <h1>Halo, gue {nama}.</h1>
+      <p class="tagline">{tagline}</p>
+      <p class="intro">
+        Selamat datang di website pribadi gue. Di sini gue nulis soal crypto,
+        forex, Web3, dan kadang catatan kuliah Informatika.
+      </p>
+      <div class="cta">
+        <a href="/blog" class="btn">Baca Blog →</a>
+        <a href="/about" class="btn-secondary">Tentang Gue</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero { padding: 4rem 0; }
+  .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+  .tagline { font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; }
+  .intro { font-size: 1.05rem; max-width: 600px; margin-bottom: 2.5rem; }
+  .cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .btn:hover { background: var(--accent-hover); color: white; }
+  .btn-secondary {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+  }
+  .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2rem; }
+    .tagline { font-size: 1rem; }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Tentang — Akim">
+  <div class="container">
+    <article class="page">
+      <h1>Tentang Gue</h1>
+
+      <p>
+        Halo. Nama gue Akim. Mahasiswa Informatika, trader crypto, dan
+        penulis yang suka nulis soal Web3, blockchain, dan forex.
+      </p>
+
+      <p>
+        Gue mulai tertarik sama crypto sekitar tahun 2022. Dari situ gue
+        belajar soal blockchain, smart contract, dan akhirnya ke dunia Web3.
+        Sekarang gue nulis catatan, analisis, dan opini di website ini.
+      </p>
+
+      <h2>Yang Gue Pelajari</h2>
+      <ul>
+        <li>Blockchain & cryptocurrency</li>
+        <li>Analisis teknikal forex & crypto</li>
+        <li>Web development (HTML, CSS, JavaScript, Astro)</li>
+        <li>Python untuk data analysis</li>
+      </ul>
+
+      <h2>Kontak</h2>
+      <p>
+        Email: <a href="mailto:hello@akim.web.id">hello@akim.web.id</a><br />
+        Twitter: <a href="https://twitter.com/" target="_blank" rel="noopener">@akim</a><br />
+        Telegram: <a href="https://t.me/" target="_blank" rel="noopener">@akim</a>
+      </p>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 640px;
+  }
+  .page h2 {
+    margin-top: 2.5rem;
+  }
+  .page ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-dim);
+  }
+  .page ul li {
+    margin-bottom: 0.5rem;
+  }
+</style>

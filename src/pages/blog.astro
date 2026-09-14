@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Blog — Akim">
+  <div class="container">
+    <article class="page">
+      <h1>Blog</h1>
+      <p class="subtitle">Catatan, analisis, dan opini soal crypto, forex, dan Web3.</p>
+
+      <div class="posts">
+        <a href="/posts/analisis-bitcoin-q1-2026" class="post-card">
+          <h3>Analisis Bitcoin Q1 2026</h3>
+          <p>Prediksi pergerakan BTC berdasarkan data on-chain dan analisis teknikal.</p>
+          <span class="meta">15 Januari 2026 · 5 menit baca</span>
+        </a>
+
+        <a href="/posts/cara-pakai-metamask" class="post-card">
+          <h3>Cara Pakai MetaMask untuk Pemula</h3>
+          <p>Panduan lengkap setup wallet MetaMask, dari install sampai transaksi pertama.</p>
+          <span class="meta">22 Januari 2026 · 7 menit baca</span>
+        </a>
+
+        <a href="/posts/belajar-candlestick" class="post-card">
+          <h3>Belajar Candlestick untuk Pemula</h3>
+          <p>Pola candlestick paling penting yang harus dikuasai setiap trader.</p>
+          <span class="meta">1 Februari 2026 · 6 menit baca</span>
+        </a>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+  .posts {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .post-card {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .post-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .post-card h3 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .post-card p {
+    margin-bottom: 1rem;
+  }
+  .meta {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+</style>
