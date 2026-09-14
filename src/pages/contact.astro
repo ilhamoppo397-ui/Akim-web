@@ -1,74 +1,169 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const contacts = [
+  {
+    label: 'Email',
+    value: 'akimhm06@gmail.com',
+    href: 'mailto:akimhm06@gmail.com',
+  },
+  {
+    label: 'Instagram',
+    value: '@akimhm_',
+    href: 'https://instagram.com/akimhm_',
+  },
+  {
+    label: 'Telegram',
+    value: '@spederman0',
+    href: 'https://t.me/spederman0',
+  },
+  {
+    label: 'GitHub',
+    value: 'ilhamoppo397-ui',
+    href: 'https://github.com/ilhamoppo397-ui',
+  },
+];
 ---
 
 <BaseLayout title="Kontak — Akim">
   <div class="container">
-    <article class="page">
-      <h1>Kontak</h1>
-      <p class="subtitle">Hubungi gue lewat salah satu channel di bawah.</p>
-
-      <div class="contact-list">
-        <a href="mailto:akimhm06@gmail.com" class="contact-item">
-          <strong>Email</strong>
-          <span>akimhm06@gmail.com</span>
-        </a>
-
-        <a href="https://instagram.com/akimhm_" target="_blank" rel="noopener" class="contact-item">
-          <strong>Instagram</strong>
-          <span>@akimhm_</span>
-        </a>
-
-        <a href="https://t.me/spederman0" target="_blank" rel="noopener" class="contact-item">
-          <strong>Telegram</strong>
-          <span>@spederman0</span>
-        </a>
-
-        <a href="https://github.com/ilhamoppo397-ui" target="_blank" rel="noopener" class="contact-item">
-          <strong>GitHub</strong>
-          <span>ilhamoppo397-ui</span>
-        </a>
-      </div>
-
-      <h2>Kolaborasi</h2>
-      <p>
-        Gue terbuka untuk kolaborasi, wawancara, atau ngobrol soal crypto dan Web3.
-        Kirim email atau DM di Instagram.
+    <header class="page-header">
+      <p class="page-label">Kontak</p>
+      <h1>Hubungi gue</h1>
+      <p class="page-lead">
+        Terbuka untuk kolaborasi, wawancara, atau ngobrol soal crypto dan Web3.
       </p>
-    </article>
+    </header>
+
+    <ul class="contact-list">
+      {contacts.map((c) => (
+        <li>
+          <a href={c.href} target={c.href.startsWith('mailto') ? undefined : '_blank'} rel="noopener">
+            <span class="contact-label">{c.label}</span>
+            <span class="contact-value">{c.value}</span>
+            <span class="contact-arrow">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <section class="note">
+      <h2>Untuk kolaborasi</h2>
+      <p>
+        Kalo lu mau ngajak kolaborasi, wawancara, atau sekadar ngobrol soal
+        crypto dan Web3, kirim email atau DM di Instagram. Gue cek tiap hari.
+      </p>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
-  .subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
+  .page-header {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-12);
   }
+
+  .page-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .page-lead {
+    font-size: 1.0625rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+
   .contact-list {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 3rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-16) 0;
+    border-top: 1px solid var(--border-subtle);
   }
-  .contact-item {
+
+  .contact-list li {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .contact-list a {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
-    transition: border-color 0.15s;
+    gap: var(--space-4);
+    padding: var(--space-5, 1.25rem) 0;
+    color: inherit;
+    text-decoration: none;
+    transition: padding 0.15s ease;
   }
-  .contact-item:hover {
-    border-color: var(--accent);
+
+  .contact-list a:hover {
+    padding-left: var(--space-3);
+    text-decoration: none;
   }
-  .contact-item strong {
-    color: var(--text);
+
+  .contact-list a:hover .contact-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
   }
-  .contact-item span {
-    color: var(--text-dim);
-    font-size: 0.9rem;
+
+  .contact-list a:hover .contact-value {
+    color: var(--accent);
   }
-  h2 {
-    margin-top: 2.5rem;
+
+  .contact-label {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    min-width: 90px;
+  }
+
+  .contact-value {
+    flex: 1;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    transition: color 0.15s ease;
+  }
+
+  .contact-arrow {
+    color: var(--text-quaternary);
+    font-size: 1rem;
+    transition: all 0.15s ease;
+  }
+
+  .note {
+    max-width: 560px;
+  }
+
+  .note h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+
+  .note p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .contact-label {
+      min-width: 70px;
+      font-size: 0.75rem;
+    }
+    .contact-value {
+      font-size: 0.875rem;
+      word-break: break-all;
+    }
   }
 </style>

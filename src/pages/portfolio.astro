@@ -4,65 +4,151 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Portofolio — Akim">
   <div class="container">
-    <article class="page">
-      <h1>Portofolio</h1>
-      <p class="subtitle">Proyek yang sedang dan sudah gue kerjakan.</p>
+    <header class="page-header">
+      <p class="page-label">Portofolio</p>
+      <h1>Yang sedang gue kerjakan</h1>
+      <p class="page-lead">
+        Proyek pribadi, eksperimen, dan catatan yang gue bangun.
+      </p>
+    </header>
 
-      <div class="projects">
-        <div class="project-card">
-          <h3>Website Pribadi (akim.web.id)</h3>
-          <p>Website yang sedang lu lihat ini. Dibuat dengan Astro v4 + HTML/CSS. Deploy di Vercel.</p>
+    <section class="project-list">
+      <article class="project">
+        <div class="project-head">
+          <h2>akim.web.id</h2>
+          <span class="project-status">Live</span>
+        </div>
+        <p>
+          Website pribadi yang sedang lu lihat ini. Dibuat dengan Astro v4,
+          HTML, dan CSS murni. Deploy di Vercel dengan auto-deploy dari GitHub.
+        </p>
+        <div class="project-tags">
           <span class="tag">Astro</span>
           <span class="tag">HTML/CSS</span>
+          <span class="tag">Vercel</span>
         </div>
+      </article>
 
-        <div class="project-card">
-          <h3>Bot Trading Sederhana</h3>
-          <p>Bot Python untuk memantau harga crypto di Binance dan kirim notifikasi ke Telegram.</p>
+      <article class="project">
+        <div class="project-head">
+          <h2>Bot Trading Sederhana</h2>
+          <span class="project-status">In progress</span>
+        </div>
+        <p>
+          Bot Python untuk memantau harga crypto di Binance dan kirim notifikasi
+          ke Telegram saat kondisi tertentu terpenuhi.
+        </p>
+        <div class="project-tags">
           <span class="tag">Python</span>
           <span class="tag">Binance API</span>
+          <span class="tag">Telegram Bot</span>
         </div>
+      </article>
 
-        <div class="project-card">
-          <h3>Catatan Kuliah Informatika</h3>
-          <p>Kumpulan catatan algoritma, struktur data, dan basis data yang gue tulis selama kuliah.</p>
-          <span class="tag">Markdown</span>
-          <span class="tag">Catatan</span>
+      <article class="project">
+        <div class="project-head">
+          <h2>Catatan Kuliah Informatika</h2>
+          <span class="project-status">Ongoing</span>
         </div>
-      </div>
-    </article>
+        <p>
+          Kumpulan catatan algoritma, struktur data, dan basis data yang gue
+          tulis selama kuliah. Ditulis dalam Markdown, di-host di GitHub.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Markdown</span>
+          <span class="tag">GitHub</span>
+        </div>
+      </article>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
-  .subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 3rem;
+  .page-header {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-12);
   }
-  .projects {
-    display: grid;
-    gap: 1.5rem;
-  }
-  .project-card {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-  }
-  .project-card h3 {
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-  .project-card p {
-    margin-bottom: 1rem;
-  }
-  .tag {
-    display: inline-block;
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
+
+  .page-label {
     font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    margin-right: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+
+  .page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .page-lead {
+    font-size: 1.0625rem;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .project {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .project:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  .project h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .project-status {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--positive);
+    font-weight: 500;
+  }
+
+  .project p {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+
+  .project-tags {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.625rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
   }
 </style>
