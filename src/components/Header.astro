@@ -4,6 +4,7 @@ const links = [
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
   { href: '/portfolio', label: 'Portofolio' },
+  { href: '/tools', label: 'Tools' },
   { href: '/contact', label: 'Kontak' },
 ];
 
@@ -85,10 +86,9 @@ const currentPath = Astro.url.pathname;
     color: var(--accent);
   }
 
-  /* Desktop nav */
   .nav-desktop ul {
     display: flex;
-    gap: var(--space-6);
+    gap: var(--space-5, 1.25rem);
     list-style: none;
     padding: 0;
     margin: 0;
@@ -104,7 +104,6 @@ const currentPath = Astro.url.pathname;
     color: var(--text-primary);
   }
 
-  /* Hamburger button — hidden di desktop */
   .menu-toggle {
     display: none;
     background: transparent;
@@ -124,7 +123,6 @@ const currentPath = Astro.url.pathname;
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
-  /* Mobile nav — hidden di desktop */
   .nav-mobile {
     display: none;
     border-top: 1px solid var(--border-subtle);
@@ -150,7 +148,6 @@ const currentPath = Astro.url.pathname;
     color: var(--text-primary);
   }
 
-  /* Mobile breakpoint */
   @media (max-width: 768px) {
     .nav-desktop {
       display: none;
@@ -162,7 +159,6 @@ const currentPath = Astro.url.pathname;
       display: block;
     }
 
-    /* Animasi hamburger → X */
     .menu-toggle.is-open .menu-icon:nth-child(1) {
       transform: translateY(6px) rotate(45deg);
     }
@@ -186,7 +182,6 @@ const currentPath = Astro.url.pathname;
       toggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // Tutup menu saat link di-klik (mobile)
     menu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         menu.classList.remove('is-open');
