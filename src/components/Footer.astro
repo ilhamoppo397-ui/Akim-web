@@ -35,7 +35,10 @@ const links = [
   </div>
 
   <div class="container footer-bottom">
-    <p>© {year} {profile.name}</p>
+    <p class="footer-quote">
+      Dibuat sambil belajar dan ngulik hal-hal yang kadang bikin lupa waktu. 😅
+    </p>
+    <p class="footer-copy">© {year} {profile.name}</p>
   </div>
 </footer>
 
@@ -88,12 +91,23 @@ const links = [
   }
 
   .footer-bottom {
-    padding-top: var(--space-4);
+    padding-top: var(--space-6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
     font-size: 0.75rem;
     color: var(--text-quaternary);
   }
   .footer-bottom p {
     margin: 0;
+  }
+  .footer-quote {
+    max-width: 480px;
+    line-height: 1.6;
+  }
+  .footer-copy {
+    white-space: nowrap;
   }
 
   @media (max-width: 640px) {
@@ -106,6 +120,14 @@ const links = [
     }
     .footer-links {
       gap: var(--space-4);
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .footer-copy {
+      white-space: normal;
     }
   }
 </style>

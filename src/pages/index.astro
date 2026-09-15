@@ -9,7 +9,7 @@ import { articles } from '../data/articles';
 <BaseLayout title="Akim — Informatics Student, Crypto & Web3">
   <div class="container">
 
-    <!-- Ticker Crypto -->
+    <!-- TICKER -->
     <div class="ticker" id="ticker">
       <div class="ticker-item">
         <span class="ticker-symbol">BTC/USD</span>
@@ -34,8 +34,8 @@ import { articles } from '../data/articles';
       <div class="ticker-updated" id="ticker-updated"></div>
     </div>
 
-    <!-- Hero -->
-    <section class="hero">
+    <!-- HERO -->
+    <section class="hero reveal">
       <h1>Haloo, gue {profile.name}. 👋</h1>
       <p class="hero-tagline">
         {profile.tagline}
@@ -51,8 +51,8 @@ import { articles } from '../data/articles';
       </div>
     </section>
 
-    <!-- Currently Learning -->
-    <section class="section">
+    <!-- CURRENTLY LEARNING -->
+    <section class="section reveal">
       <div class="section-head">
         <h2>Currently Learning</h2>
         <p class="section-sub">Yang lagi gue pelajarin</p>
@@ -67,8 +67,8 @@ import { articles } from '../data/articles';
       </ul>
     </section>
 
-    <!-- Currently Working On -->
-    <section class="section">
+    <!-- CURRENTLY WORKING ON -->
+    <section class="section reveal">
       <div class="section-head">
         <h2>Yang lagi gue kerjain</h2>
         <p class="section-sub">Project dan aktivitas saat ini</p>
@@ -88,8 +88,8 @@ import { articles } from '../data/articles';
       </ul>
     </section>
 
-    <!-- Recent Posts -->
-    <section class="section">
+    <!-- RECENT POSTS -->
+    <section class="section reveal">
       <div class="section-head-row">
         <h2>Catatan terbaru</h2>
         <a href="/blog" class="section-link">Lihat semua →</a>
@@ -318,6 +318,24 @@ import { articles } from '../data/articles';
     line-height: 1.6;
   }
 
+  /* ---------- REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 640px) {
     .hero h1 { font-size: 1.75rem; }
@@ -330,12 +348,40 @@ import { articles } from '../data/articles';
 
 <script>
   const API = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true';
+  const REFRESH_INTERVAL = 30000; // 30 detik
+  let lastUpdated = null;
+  let retryCount = 0;
 
   function setUnavailable() {
-    ['btc-price', 'eth-price', 'sol-price', 'bnb-price'].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = 'Data unavailable';
+    const ids = ['btc', 'eth', 'sol', 'bnb'];
+    ids.forEach((id) => {
+      const priceEl = document.getElementById(`${id}-price`);
+      const changeEl = document.getElementById(`${id}-change`);
+      if (priceEl) priceEl.textContent = '—';
+      if (changeEl) {
+        changeEl.textContent = '';
+        changeEl.classList.remove('up', 'down');
+      }
     });
+    const updatedEl = document.getElementById('ticker-updated');
+    if (updatedEl) {
+      updatedEl.textContent = 'Harga lagi ga bisa diambil.';
+    }
+  }
+
+  function updateTimestamp() {
+    const updatedEl = document.getElementById('ticker-updated');
+    if (!updatedEl || !lastUpdated) return;
+    const diff = Math.floor((Date.now() - lastUpdated) / 1000);
+    if (diff < 30) {
+      updatedEl.textContent = 'Baru aja di-update';
+    } else if (diff < 60) {
+      updatedEl.textContent = `Update ${diff} detik lalu`;
+    } else if (diff < 3600) {
+      updatedEl.textContent = `Update ${Math.floor(diff / 60)} menit lalu`;
+    } else {
+      updatedEl.textContent = `Update ${Math.floor(diff / 3600)} jam lalu`;
+    }
   }
 
   async function loadPrices() {
@@ -371,19 +417,38 @@ import { articles } from '../data/articles';
       update('solana', 'sol-price', 'sol-change', 2);
       update('binancecoin', 'bnb-price', 'bnb-change', 2);
 
-      const updatedEl = document.getElementById('ticker-updated');
-      if (updatedEl) {
-        const now = new Date();
-        const hh = String(now.getHours()).padStart(2, '0');
-        const mm = String(now.getMinutes()).padStart(2, '0');
-        updatedEl.textContent = `Updated ${hh}:${mm}`;
-      }
+      lastUpdated = Date.now();
+      retryCount = 0;
+      updateTimestamp();
     } catch (e) {
       console.warn('Price fetch failed:', e);
-      setUnavailable();
+      retryCount++;
+      if (retryCount >= 3) {
+        setUnavailable();
+      }
     }
   }
 
   loadPrices();
-  setInterval(loadPrices, 60000);
+  setInterval(loadPrices, REFRESH_INTERVAL);
+  setInterval(updateTimestamp, 10000); // update timestamp tiap 10 detik
+
+  // Reveal on scroll
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add('is-visible'));
+  }
 </script>
