@@ -1,0 +1,382 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Tools — Akim" description="Kalkulator kecil buat ngitung trading dan crypto. Bukan saran beli/jual.">
+  <div class="container">
+    <header class="page-header">
+      <p class="page-label">Tools</p>
+      <h1>Kalkulator kecil</h1>
+      <p class="page-lead">
+        Beberapa kalkulator yang gue bikin buat ngulik trading dan crypto.
+        Jalan di HP atau laptop lu, ga dikirim ke mana-mana.
+      </p>
+      <p class="disclaimer">
+        <strong>Catatan:</strong> Ini cuma alat hitung, bukan saran beli/jual.
+        Keputusan tetap di lu.
+      </p>
+    </header>
+
+    <div class="tools-grid">
+
+      <!-- KALKULATOR RISIKO -->
+      <section class="tool-card">
+        <header class="tool-head">
+          <h2>Kalkulator Risiko</h2>
+          <p>Hitung berapa duit yang siap dirugiin, plus ukuran posisi yang pas.</p>
+        </header>
+        <div class="tool-body">
+          <label>
+            <span>Modal (USD)</span>
+            <input type="number" id="rc-modal" placeholder="1000" step="any" />
+          </label>
+          <label>
+            <span>Risiko per transaksi (%)</span>
+            <input type="number" id="rc-risk" placeholder="1" step="any" />
+          </label>
+          <label>
+            <span>Harga masuk (entry)</span>
+            <input type="number" id="rc-entry" placeholder="50000" step="any" />
+          </label>
+          <label>
+            <span>Batas kerugian (stop loss)</span>
+            <input type="number" id="rc-sl" placeholder="49000" step="any" />
+          </label>
+          <button class="btn" data-calc="risk">Hitung</button>
+        </div>
+        <div class="tool-result" id="rc-result" hidden></div>
+      </section>
+
+      <!-- KALKULATOR UNTUNG / RUGI -->
+      <section class="tool-card">
+        <header class="tool-head">
+          <h2>Kalkulator Untung / Rugi</h2>
+          <p>Hitung untung atau rugi dari posisi yang lagi lu pegang.</p>
+        </header>
+        <div class="tool-body">
+          <label>
+            <span>Harga masuk (entry)</span>
+            <input type="number" id="pl-entry" placeholder="50000" step="any" />
+          </label>
+          <label>
+            <span>Harga keluar (exit)</span>
+            <input type="number" id="pl-exit" placeholder="52000" step="any" />
+          </label>
+          <label>
+            <span>Jumlah yang dibeli</span>
+            <input type="number" id="pl-size" placeholder="0.1" step="any" />
+          </label>
+          <label>
+            <span>Arah posisi</span>
+            <select id="pl-side">
+              <option value="long">Beli (long)</option>
+              <option value="short">Jual (short)</option>
+            </select>
+          </label>
+          <button class="btn" data-calc="pl">Hitung</button>
+        </div>
+        <div class="tool-result" id="pl-result" hidden></div>
+      </section>
+
+      <!-- KALKULATOR UKURAN POSISI -->
+      <section class="tool-card">
+        <header class="tool-head">
+          <h2>Kalkulator Ukuran Posisi</h2>
+          <p>Hitung ukuran posisi berdasarkan risiko yang siap ditanggung.</p>
+        </header>
+        <div class="tool-body">
+          <label>
+            <span>Modal (USD)</span>
+            <input type="number" id="ls-modal" placeholder="1000" step="any" />
+          </label>
+          <label>
+            <span>Risiko per transaksi (%)</span>
+            <input type="number" id="ls-risk" placeholder="1" step="any" />
+          </label>
+          <label>
+            <span>Jarak stop loss (poin)</span>
+            <input type="number" id="ls-sl" placeholder="100" step="any" />
+          </label>
+          <button class="btn" data-calc="lot">Hitung</button>
+        </div>
+        <div class="tool-result" id="ls-result" hidden></div>
+      </section>
+
+      <!-- KALKULATOR CRYPTO -->
+      <section class="tool-card">
+        <header class="tool-head">
+          <h2>Kalkulator Crypto</h2>
+          <p>Ubah jumlah crypto ke USD atau Rupiah. Harga lu isi sendiri ya.</p>
+        </header>
+        <div class="tool-body">
+          <label>
+            <span>Jumlah crypto</span>
+            <input type="number" id="cc-amount" placeholder="0.5" step="any" />
+          </label>
+          <label>
+            <span>Harga per koin (USD)</span>
+            <input type="number" id="cc-price" placeholder="78000" step="any" />
+          </label>
+          <label>
+            <span>Kurs USD ke Rupiah</span>
+            <input type="number" id="cc-rate" placeholder="15800" step="any" value="15800" />
+          </label>
+          <button class="btn" data-calc="crypto">Hitung</button>
+        </div>
+        <div class="tool-result" id="cc-result" hidden></div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-12);
+    max-width: 640px;
+  }
+  .page-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+  .page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: var(--space-3);
+  }
+  .page-lead {
+    font-size: 1.0625rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
+    line-height: 1.7;
+  }
+  .disclaimer {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    background: var(--bg-elevated);
+    border-left: 3px solid var(--warning);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    margin: 0;
+  }
+  .disclaimer strong { color: var(--warning); }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+
+  .tool-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: border-color 0.15s ease;
+  }
+  .tool-card:hover {
+    border-color: var(--border-default);
+  }
+
+  .tool-head h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-1) 0;
+    color: var(--text-primary);
+  }
+  .tool-head p {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin: 0 0 var(--space-6) 0;
+    line-height: 1.5;
+  }
+
+  .tool-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .tool-body label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .tool-body label span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    font-weight: 500;
+  }
+
+  .tool-body input,
+  .tool-body select {
+    background: var(--bg-base);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .tool-body input:focus,
+  .tool-body select:focus {
+    border-color: var(--accent);
+  }
+  .tool-body input::placeholder { color: var(--text-quaternary); }
+
+  .tool-body .btn {
+    margin-top: var(--space-2);
+    justify-content: center;
+  }
+
+  .tool-result {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+  .tool-result strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .tool-result .positive { color: var(--positive); }
+  .tool-result .negative { color: var(--negative); }
+  .tool-result .warning { color: var(--warning); }
+
+  @media (max-width: 768px) {
+    .tools-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  function fmt(n, decimals = 2) {
+    if (!isFinite(n)) return '—';
+    return n.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  }
+
+  function show(id, html) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = html;
+    el.hidden = false;
+  }
+
+  function calcRisk() {
+    const modal = parseFloat(document.getElementById('rc-modal').value);
+    const riskPct = parseFloat(document.getElementById('rc-risk').value);
+    const entry = parseFloat(document.getElementById('rc-entry').value);
+    const sl = parseFloat(document.getElementById('rc-sl').value);
+
+    if ([modal, riskPct, entry, sl].some((v) => !isFinite(v) || v <= 0)) {
+      return show('rc-result', '<span class="warning">Isi semua kolom dengan angka yang bener ya.</span>');
+    }
+
+    const riskUsd = modal * (riskPct / 100);
+    const slDistance = Math.abs(entry - sl);
+    const slPct = (slDistance / entry) * 100;
+    const positionSize = riskUsd / slDistance;
+    const positionValue = positionSize * entry;
+
+    show('rc-result', `
+      <div><strong>Duit yang siap dirugiin:</strong> $${fmt(riskUsd)}</div>
+      <div><strong>Jarak ke stop loss:</strong> ${fmt(slDistance)} (${fmt(slPct)}%)</div>
+      <div><strong>Ukuran posisi yang pas:</strong> ${fmt(positionSize, 4)} unit</div>
+      <div><strong>Total nilai posisi:</strong> $${fmt(positionValue)}</div>
+    `);
+  }
+
+  function calcPL() {
+    const entry = parseFloat(document.getElementById('pl-entry').value);
+    const exit = parseFloat(document.getElementById('pl-exit').value);
+    const size = parseFloat(document.getElementById('pl-size').value);
+    const side = document.getElementById('pl-side').value;
+
+    if ([entry, exit, size].some((v) => !isFinite(v) || v <= 0)) {
+      return show('pl-result', '<span class="warning">Isi semua kolom dengan angka yang bener ya.</span>');
+    }
+
+    const diff = side === 'long' ? exit - entry : entry - exit;
+    const pl = diff * size;
+    const pct = (diff / entry) * 100;
+    const cls = pl >= 0 ? 'positive' : 'negative';
+    const sign = pl >= 0 ? '+' : '';
+    const label = pl >= 0 ? 'Untung' : 'Rugi';
+
+    show('pl-result', `
+      <div><strong>Arah posisi:</strong> ${side === 'long' ? 'Beli (long)' : 'Jual (short)'}</div>
+      <div><strong>Selisih harga:</strong> ${fmt(diff)}</div>
+      <div class="${cls}"><strong>${label}:</strong> ${sign}$${fmt(pl)} (${sign}${fmt(pct)}%)</div>
+    `);
+  }
+
+  function calcLot() {
+    const modal = parseFloat(document.getElementById('ls-modal').value);
+    const riskPct = parseFloat(document.getElementById('ls-risk').value);
+    const slPoints = parseFloat(document.getElementById('ls-sl').value);
+
+    if ([modal, riskPct, slPoints].some((v) => !isFinite(v) || v <= 0)) {
+      return show('ls-result', '<span class="warning">Isi semua kolom dengan angka yang bener ya.</span>');
+    }
+
+    const riskUsd = modal * (riskPct / 100);
+    const lot = riskUsd / slPoints;
+
+    show('ls-result', `
+      <div><strong>Duit yang siap dirugiin:</strong> $${fmt(riskUsd)}</div>
+      <div><strong>Jarak stop loss:</strong> ${fmt(slPoints)} poin</div>
+      <div><strong>Ukuran posisi yang pas:</strong> ${fmt(lot, 4)}</div>
+    `);
+  }
+
+  function calcCrypto() {
+    const amount = parseFloat(document.getElementById('cc-amount').value);
+    const price = parseFloat(document.getElementById('cc-price').value);
+    const rate = parseFloat(document.getElementById('cc-rate').value);
+
+    if ([amount, price, rate].some((v) => !isFinite(v) || v <= 0)) {
+      return show('cc-result', '<span class="warning">Isi semua kolom dengan angka yang bener ya.</span>');
+    }
+
+    const usd = amount * price;
+    const idr = usd * rate;
+
+    show('cc-result', `
+      <div><strong>Dalam USD:</strong> $${fmt(usd)}</div>
+      <div><strong>Dalam Rupiah:</strong> Rp ${fmt(idr, 0)}</div>
+    `);
+  }
+
+  const handlers = {
+    risk: calcRisk,
+    pl: calcPL,
+    lot: calcLot,
+    crypto: calcCrypto,
+  };
+
+  document.querySelectorAll('[data-calc]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.calc;
+      if (key && handlers[key]) handlers[key]();
+    });
+  });
+</script>
