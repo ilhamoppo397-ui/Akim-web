@@ -26,6 +26,16 @@ const ogImage = new URL(image, canonicalURL);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Anti-flash: apply theme SEBELUM render -->
+  <script is:inline>
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+
   <!-- Primary Meta Tags -->
   <title>{title}</title>
   <meta name="title" content={title} />
