@@ -112,38 +112,44 @@ import { articles } from '../data/articles';
       </aside>
     </section>
 
-    <!-- CURRENTLY LEARNING -->
+    <!-- CURRENTLY LEARNING (numbered editorial) -->
     <section class="section reveal">
       <div class="section-head">
         <h2>Currently Learning</h2>
         <p class="section-sub">Yang lagi gue pelajarin</p>
       </div>
-      <ul class="learning-list">
-        {learning.map((item) => (
-          <li>
-            <span class="learning-name">{item.name}</span>
-            <span class="learning-note">{item.note}</span>
+      <ul class="numbered-list">
+        {learning.map((item, i) => (
+          <li class="numbered-item">
+            <div class="num">{String(i + 1).padStart(2, '0')}</div>
+            <div class="num-body">
+              <span class="num-title">{item.name}</span>
+              <span class="num-note">{item.note}</span>
+            </div>
           </li>
         ))}
       </ul>
     </section>
 
-    <!-- CURRENTLY WORKING ON -->
+    <!-- CURRENTLY WORKING ON (numbered editorial) -->
     <section class="section reveal">
       <div class="section-head">
         <h2>Yang lagi gue kerjain</h2>
         <p class="section-sub">Project dan aktivitas saat ini</p>
       </div>
-      <ul class="working-list">
-        {workingOn.map((item) => (
-          <li>
-            <div class="working-head">
-              <span class="working-title">{item.title}</span>
-              <span class={`status status-${item.status.toLowerCase().replace(' ', '-')}`}>
-                {item.status}
-              </span>
+      <ul class="numbered-list">
+        {workingOn.map((item, i) => (
+          <li class="numbered-item">
+            <div class="num">{String(i + 1).padStart(2, '0')}</div>
+            <div class="num-body">
+              <div class="num-head">
+                <span class="num-title">{item.title}</span>
+                <span class={`status status-${item.status.toLowerCase().replace(' ', '-')}`}>
+                  {item.status}
+                </span>
+              </div>
+              <span class="num-note">{item.note}</span>
             </div>
-            <p class="working-note">{item.note}</p>
           </li>
         ))}
       </ul>
@@ -470,59 +476,61 @@ import { articles } from '../data/articles';
   }
   .section-link:hover { color: var(--accent); }
 
-  .learning-list {
+  /* ============ NUMBERED LIST (shared) ============ */
+  .numbered-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-3) var(--space-6);
-  }
-  .learning-list li {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-3) 0;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-  .learning-name {
-    color: var(--text-primary);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    margin-bottom: 2px;
-  }
-  .learning-note {
-    color: var(--text-tertiary);
-    font-size: 0.8125rem;
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .working-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .working-list li {
-    padding: var(--space-4) 0;
+  .numbered-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: var(--space-6);
+    padding: var(--space-5) 0;
     border-bottom: 1px solid var(--border-subtle);
+    transition: padding 0.2s ease;
   }
-  .working-list li:last-child { border-bottom: none; }
-  .working-head {
+  .numbered-item:hover {
+    padding-left: var(--space-3);
+  }
+  .numbered-item:hover .num {
+    color: var(--accent);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-quaternary);
+    font-weight: 500;
+    padding-top: 2px;
+    transition: color 0.2s ease;
+  }
+
+  .num-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+  .num-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: var(--space-3);
-    margin-bottom: var(--space-1);
   }
-  .working-title {
+  .num-title {
     color: var(--text-primary);
     font-size: 0.9375rem;
     font-weight: 500;
   }
-  .working-note {
+  .num-note {
     color: var(--text-tertiary);
     font-size: 0.8125rem;
-    margin: 0;
     line-height: 1.5;
   }
+
   .status {
     font-size: 0.6875rem;
     padding: 0.125rem 0.5rem;
@@ -531,6 +539,7 @@ import { articles } from '../data/articles';
     letter-spacing: 0.05em;
     font-weight: 500;
     white-space: nowrap;
+    flex-shrink: 0;
   }
   .status-in-progress {
     background: rgba(79, 139, 255, 0.1);
@@ -551,7 +560,6 @@ import { articles } from '../data/articles';
     flex-direction: column;
     border-top: 1px solid var(--border-subtle);
   }
-
   .note-row {
     display: grid;
     grid-template-columns: 60px 1fr;
@@ -577,9 +585,7 @@ import { articles } from '../data/articles';
     padding-top: 2px;
     transition: color 0.2s ease;
   }
-
   .note-body { min-width: 0; }
-
   .note-category {
     font-size: 0.6875rem;
     text-transform: uppercase;
@@ -588,7 +594,6 @@ import { articles } from '../data/articles';
     font-weight: 600;
     margin-bottom: var(--space-2);
   }
-
   .note-title {
     font-size: 1.125rem;
     font-weight: 600;
@@ -598,14 +603,12 @@ import { articles } from '../data/articles';
     letter-spacing: -0.01em;
     transition: color 0.2s ease;
   }
-
   .note-desc {
     font-size: 0.9375rem;
     color: var(--text-tertiary);
     margin: 0 0 var(--space-3) 0;
     line-height: 1.6;
   }
-
   .note-meta {
     display: flex;
     gap: var(--space-2);
@@ -644,7 +647,6 @@ import { articles } from '../data/articles';
   @media (max-width: 640px) {
     .hero h1 { font-size: 1.75rem; }
     .hero-tagline { font-size: 1rem; }
-    .learning-list { grid-template-columns: 1fr; }
     .working-head { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
     .hero-visual { max-width: none; }
     .terminal-body { font-size: 0.6875rem; }
@@ -657,14 +659,22 @@ import { articles } from '../data/articles';
     .ticker-updated { display: none; }
     .ticker-item { padding-right: var(--space-4); }
 
-    .note-row {
+    .note-row,
+    .numbered-item {
       grid-template-columns: 40px 1fr;
       gap: var(--space-3);
       padding: var(--space-5) 0;
     }
-    .note-number { font-size: 0.75rem; }
+    .note-number,
+    .num { font-size: 0.75rem; }
     .note-title { font-size: 1rem; }
     .note-desc { font-size: 0.875rem; }
+
+    .num-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
   }
 </style>
 
