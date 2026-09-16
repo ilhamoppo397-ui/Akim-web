@@ -149,24 +149,30 @@ import { articles } from '../data/articles';
       </ul>
     </section>
 
-    <!-- RECENT POSTS -->
+    <!-- LATEST NOTES (numbered editorial) -->
     <section class="section reveal">
       <div class="section-head-row">
-        <h2>Catatan terbaru</h2>
+        <div>
+          <h2>Catatan terbaru</h2>
+          <p class="section-sub">Yang lagi gue tulis dan pelajarin</p>
+        </div>
         <a href="/blog" class="section-link">Lihat semua →</a>
       </div>
-      <div class="post-list">
-        {articles.slice(0, 3).map((post) => (
-          <a href={`/posts/${post.slug}`} class="post-row">
-            <div class="post-meta">
-              <span>{post.dateLabel}</span>
-              <span class="post-dot">·</span>
-              <span class="post-tag">{post.category}</span>
-              <span class="post-dot">·</span>
-              <span>{post.readTime}</span>
+
+      <div class="notes-list">
+        {articles.slice(0, 3).map((post, i) => (
+          <a href={`/posts/${post.slug}`} class="note-row">
+            <div class="note-number">{String(i + 1).padStart(2, '0')}</div>
+            <div class="note-body">
+              <div class="note-category">{post.category}</div>
+              <h3 class="note-title">{post.title}</h3>
+              <p class="note-desc">{post.description}</p>
+              <div class="note-meta">
+                <span>{post.dateLabel}</span>
+                <span class="note-dot">·</span>
+                <span>{post.readTime}</span>
+              </div>
             </div>
-            <h3>{post.title}</h3>
-            <p>{post.description}</p>
           </a>
         ))}
       </div>
@@ -188,7 +194,6 @@ import { articles } from '../data/articles';
     margin-bottom: var(--space-12);
     overflow: hidden;
   }
-
   .ticker-label {
     font-size: 0.625rem;
     text-transform: uppercase;
@@ -199,7 +204,6 @@ import { articles } from '../data/articles';
     border-right: 1px solid var(--border-subtle);
     flex-shrink: 0;
   }
-
   .ticker-items {
     display: flex;
     gap: var(--space-6);
@@ -209,7 +213,6 @@ import { articles } from '../data/articles';
     -ms-overflow-style: none;
   }
   .ticker-items::-webkit-scrollbar { display: none; }
-
   .ticker-item {
     display: flex;
     align-items: center;
@@ -219,17 +222,12 @@ import { articles } from '../data/articles';
     border-right: 1px solid var(--border-subtle);
     flex-shrink: 0;
   }
-  .ticker-item:last-child {
-    border-right: none;
-    padding-right: 0;
-  }
-
+  .ticker-item:last-child { border-right: none; padding-right: 0; }
   .ticker-symbol {
     color: var(--text-tertiary);
     font-weight: 500;
     font-size: 0.75rem;
   }
-
   .ticker-price {
     color: var(--text-primary);
     font-family: var(--font-mono);
@@ -238,10 +236,7 @@ import { articles } from '../data/articles';
     opacity: 0;
     transition: opacity 0.3s ease;
   }
-  .ticker-price.is-loaded {
-    opacity: 1;
-  }
-
+  .ticker-price.is-loaded { opacity: 1; }
   .ticker-change {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -251,30 +246,20 @@ import { articles } from '../data/articles';
   }
   .ticker-change.up { color: var(--positive); }
   .ticker-change.down { color: var(--negative); }
-
-  /* Skeleton loading */
   .ticker-skeleton {
     display: inline-block;
     width: 60px;
     height: 12px;
-    background: linear-gradient(
-      90deg,
-      var(--bg-elevated) 0%,
-      var(--bg-hover) 50%,
-      var(--bg-elevated) 100%
-    );
+    background: linear-gradient(90deg, var(--bg-elevated) 0%, var(--bg-hover) 50%, var(--bg-elevated) 100%);
     background-size: 200% 100%;
     border-radius: 3px;
     animation: shimmer 1.5s ease-in-out infinite;
   }
-  .ticker-skeleton.is-hidden {
-    display: none;
-  }
+  .ticker-skeleton.is-hidden { display: none; }
   @keyframes shimmer {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
-
   .ticker-updated {
     font-size: 0.6875rem;
     color: var(--text-quaternary);
@@ -344,7 +329,6 @@ import { articles } from '../data/articles';
     border-color: var(--border-default);
     transform: translateY(-2px);
   }
-
   .terminal-bar {
     display: flex;
     align-items: center;
@@ -442,7 +426,6 @@ import { articles } from '../data/articles';
   }
   .market-change.up { color: var(--positive); }
   .market-change.down { color: var(--negative); }
-
   .market-chart {
     margin-top: var(--space-3);
     padding-top: var(--space-3);
@@ -472,16 +455,18 @@ import { articles } from '../data/articles';
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-8);
+    gap: var(--space-4);
   }
   .section-head-row h2 {
     font-size: 1.125rem;
     font-weight: 600;
-    margin: 0;
+    margin: 0 0 var(--space-1) 0;
   }
   .section-link {
     font-size: 0.8125rem;
     color: var(--text-tertiary);
+    flex-shrink: 0;
   }
   .section-link:hover { color: var(--accent); }
 
@@ -560,43 +545,77 @@ import { articles } from '../data/articles';
     color: var(--positive);
   }
 
-  .post-list { display: flex; flex-direction: column; }
-  .post-row {
-    display: block;
-    padding: 1.25rem 0;
+  /* ============ LATEST NOTES (numbered editorial) ============ */
+  .notes-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .note-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: var(--space-6);
+    padding: var(--space-6) 0;
     border-bottom: 1px solid var(--border-subtle);
     text-decoration: none;
     color: inherit;
-    transition: padding 0.15s ease;
+    transition: padding 0.2s ease;
   }
-  .post-row:last-child { border-bottom: none; }
-  .post-row:hover { padding-left: var(--space-3); text-decoration: none; }
-  .post-row:hover h3 { color: var(--accent); }
-  .post-meta {
+  .note-row:hover {
+    padding-left: var(--space-3);
+    text-decoration: none;
+  }
+  .note-row:hover .note-title { color: var(--accent); }
+  .note-row:hover .note-number { color: var(--accent); }
+
+  .note-number {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-quaternary);
+    font-weight: 500;
+    padding-top: 2px;
+    transition: color 0.2s ease;
+  }
+
+  .note-body { min-width: 0; }
+
+  .note-category {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+
+  .note-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2) 0;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+  }
+
+  .note-desc {
+    font-size: 0.9375rem;
+    color: var(--text-tertiary);
+    margin: 0 0 var(--space-3) 0;
+    line-height: 1.6;
+  }
+
+  .note-meta {
     display: flex;
     gap: var(--space-2);
     align-items: center;
     font-size: 0.75rem;
-    color: var(--text-tertiary);
-    margin-bottom: var(--space-2);
+    color: var(--text-quaternary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .post-tag { color: var(--accent); }
-  .post-dot { color: var(--text-quaternary); }
-  .post-row h3 {
-    font-size: 1.0625rem;
-    font-weight: 600;
-    margin-bottom: var(--space-2);
-    color: var(--text-primary);
-    transition: color 0.15s ease;
-  }
-  .post-row p {
-    font-size: 0.9375rem;
-    color: var(--text-tertiary);
-    margin: 0;
-    line-height: 1.6;
-  }
+  .note-dot { color: var(--text-quaternary); }
 
   /* ============ REVEAL ============ */
   .reveal {
@@ -634,15 +653,18 @@ import { articles } from '../data/articles';
       gap: var(--space-3);
       flex-wrap: wrap;
     }
-    .ticker-label {
-      padding-right: var(--space-3);
+    .ticker-label { padding-right: var(--space-3); }
+    .ticker-updated { display: none; }
+    .ticker-item { padding-right: var(--space-4); }
+
+    .note-row {
+      grid-template-columns: 40px 1fr;
+      gap: var(--space-3);
+      padding: var(--space-5) 0;
     }
-    .ticker-updated {
-      display: none;
-    }
-    .ticker-item {
-      padding-right: var(--space-4);
-    }
+    .note-number { font-size: 0.75rem; }
+    .note-title { font-size: 1rem; }
+    .note-desc { font-size: 0.875rem; }
   }
 </style>
 
@@ -660,20 +682,13 @@ import { articles } from '../data/articles';
     });
   }
 
-  function revealPrice(priceId) {
-    const priceEl = document.getElementById(priceId);
-    if (priceEl) priceEl.classList.add('is-loaded');
-  }
-
   function hideSkeleton(item) {
     const skel = item.querySelector('[data-skeleton]');
     if (skel) skel.classList.add('is-hidden');
   }
 
   function setUnavailable() {
-    document.querySelectorAll('[data-market-item]').forEach((item) => {
-      hideSkeleton(item);
-    });
+    document.querySelectorAll('[data-market-item]').forEach((item) => hideSkeleton(item));
     ['btc', 'eth', 'sol', 'bnb'].forEach((id) => {
       const priceEl = document.getElementById(`${id}-price`);
       const changeEl = document.getElementById(`${id}-change`);
@@ -733,12 +748,10 @@ import { articles } from '../data/articles';
         if (priceEl) {
           priceEl.textContent = fmtPrice(p, decimals);
           priceEl.hidden = false;
-          // Trigger fade in
           requestAnimationFrame(() => priceEl.classList.add('is-loaded'));
         }
         setChange(document.getElementById(changeId), c);
 
-        // Hide skeleton untuk item ini
         const item = priceEl?.closest('[data-market-item]');
         if (item) hideSkeleton(item);
       };
@@ -748,7 +761,6 @@ import { articles } from '../data/articles';
       update('solana', 'sol-price', 'sol-change', 2);
       update('binancecoin', 'bnb-price', 'bnb-change', 2);
 
-      // Hero mini
       const updateHero = (id, priceId, changeId, decimals) => {
         const p = data[id]?.usd;
         const c = data[id]?.usd_24h_change;
@@ -774,7 +786,6 @@ import { articles } from '../data/articles';
   setInterval(loadPrices, REFRESH_INTERVAL);
   setInterval(updateTimestamp, 10000);
 
-  // Reveal on scroll
   const els = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(
