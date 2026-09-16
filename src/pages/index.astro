@@ -9,28 +9,37 @@ import { articles } from '../data/articles';
 <BaseLayout title="Akim — Informatics Student, Crypto & Web3">
   <div class="container">
 
-    <!-- TICKER -->
+    <!-- MARKET TICKER -->
     <div class="ticker" id="ticker">
-      <div class="ticker-item">
-        <span class="ticker-symbol">BTC/USD</span>
-        <span class="ticker-price" id="btc-price">Loading...</span>
-        <span class="ticker-change" id="btc-change"></span>
+      <div class="ticker-label">MARKET</div>
+
+      <div class="ticker-items">
+        <div class="ticker-item" data-market-item>
+          <span class="ticker-symbol">BTC/USD</span>
+          <span class="ticker-skeleton" data-skeleton></span>
+          <span class="ticker-price" id="btc-price" hidden>—</span>
+          <span class="ticker-change" id="btc-change"></span>
+        </div>
+        <div class="ticker-item" data-market-item>
+          <span class="ticker-symbol">ETH/USD</span>
+          <span class="ticker-skeleton" data-skeleton></span>
+          <span class="ticker-price" id="eth-price" hidden>—</span>
+          <span class="ticker-change" id="eth-change"></span>
+        </div>
+        <div class="ticker-item" data-market-item>
+          <span class="ticker-symbol">SOL/USD</span>
+          <span class="ticker-skeleton" data-skeleton></span>
+          <span class="ticker-price" id="sol-price" hidden>—</span>
+          <span class="ticker-change" id="sol-change"></span>
+        </div>
+        <div class="ticker-item" data-market-item>
+          <span class="ticker-symbol">BNB/USD</span>
+          <span class="ticker-skeleton" data-skeleton></span>
+          <span class="ticker-price" id="bnb-price" hidden>—</span>
+          <span class="ticker-change" id="bnb-change"></span>
+        </div>
       </div>
-      <div class="ticker-item">
-        <span class="ticker-symbol">ETH/USD</span>
-        <span class="ticker-price" id="eth-price">Loading...</span>
-        <span class="ticker-change" id="eth-change"></span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-symbol">SOL/USD</span>
-        <span class="ticker-price" id="sol-price">Loading...</span>
-        <span class="ticker-change" id="sol-change"></span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-symbol">BNB/USD</span>
-        <span class="ticker-price" id="bnb-price">Loading...</span>
-        <span class="ticker-change" id="bnb-change"></span>
-      </div>
+
       <div class="ticker-updated" id="ticker-updated"></div>
     </div>
 
@@ -54,7 +63,6 @@ import { articles } from '../data/articles';
       </div>
 
       <aside class="hero-visual" aria-hidden="true">
-        <!-- Terminal mini -->
         <div class="visual-card terminal-card">
           <div class="terminal-bar">
             <span class="dot dot-red"></span>
@@ -72,7 +80,6 @@ import { articles } from '../data/articles';
           </div>
         </div>
 
-        <!-- Market mini -->
         <div class="visual-card market-card">
           <div class="market-head">
             <span class="market-label">MARKET</span>
@@ -169,26 +176,115 @@ import { articles } from '../data/articles';
 </BaseLayout>
 
 <style>
-  /* ---------- TICKER (unchanged) ---------- */
+  /* ============ MARKET TICKER ============ */
   .ticker {
     display: flex;
-    gap: var(--space-6);
+    align-items: center;
+    gap: var(--space-5);
     padding: var(--space-3) 0;
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
     font-size: 0.8125rem;
-    overflow-x: auto;
     margin-bottom: var(--space-12);
-    position: relative;
+    overflow: hidden;
   }
+
+  .ticker-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-quaternary);
+    font-weight: 600;
+    padding-right: var(--space-4);
+    border-right: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .ticker-items {
+    display: flex;
+    gap: var(--space-6);
+    overflow-x: auto;
+    flex: 1;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .ticker-items::-webkit-scrollbar { display: none; }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+    padding-right: var(--space-6);
+    border-right: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+  .ticker-item:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .ticker-symbol {
+    color: var(--text-tertiary);
+    font-weight: 500;
+    font-size: 0.75rem;
+  }
+
+  .ticker-price {
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .ticker-price.is-loaded {
+    opacity: 1;
+  }
+
+  .ticker-change {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    min-width: 55px;
+    text-align: right;
+  }
+  .ticker-change.up { color: var(--positive); }
+  .ticker-change.down { color: var(--negative); }
+
+  /* Skeleton loading */
+  .ticker-skeleton {
+    display: inline-block;
+    width: 60px;
+    height: 12px;
+    background: linear-gradient(
+      90deg,
+      var(--bg-elevated) 0%,
+      var(--bg-hover) 50%,
+      var(--bg-elevated) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 3px;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  .ticker-skeleton.is-hidden {
+    display: none;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
   .ticker-updated {
     font-size: 0.6875rem;
     color: var(--text-quaternary);
-    margin-left: auto;
     white-space: nowrap;
+    flex-shrink: 0;
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--border-subtle);
   }
 
-  /* ---------- HERO (new: 2-column) ---------- */
+  /* ============ HERO ============ */
   .hero {
     display: grid;
     grid-template-columns: 55% 45%;
@@ -196,9 +292,7 @@ import { articles } from '../data/articles';
     align-items: center;
     padding: var(--space-8) 0 var(--space-16);
   }
-
   .hero-text { max-width: 560px; }
-
   .hero-label {
     font-size: 0.6875rem;
     text-transform: uppercase;
@@ -207,7 +301,6 @@ import { articles } from '../data/articles';
     margin-bottom: var(--space-4);
     font-weight: 600;
   }
-
   .hero h1 {
     font-size: 2.75rem;
     line-height: 1.1;
@@ -215,34 +308,30 @@ import { articles } from '../data/articles';
     margin-bottom: var(--space-5);
     font-weight: 700;
   }
-
   .hero-tagline {
     font-size: 1.0625rem;
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: var(--space-4);
   }
-
   .hero-desc {
     font-size: 0.9375rem;
     color: var(--text-tertiary);
     margin-bottom: var(--space-6);
     line-height: 1.7;
   }
-
   .hero-cta {
     display: flex;
     gap: var(--space-3);
     flex-wrap: wrap;
   }
 
-  /* ---------- HERO VISUAL ---------- */
+  /* ============ HERO VISUAL ============ */
   .hero-visual {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
   }
-
   .visual-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
@@ -256,7 +345,6 @@ import { articles } from '../data/articles';
     transform: translateY(-2px);
   }
 
-  /* Terminal mini */
   .terminal-bar {
     display: flex;
     align-items: center;
@@ -265,11 +353,7 @@ import { articles } from '../data/articles';
     background: var(--bg-elevated);
     border-bottom: 1px solid var(--border-subtle);
   }
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
   .dot-red { background: #ff5f56; }
   .dot-yellow { background: #ffbd2e; }
   .dot-green { background: #27c93f; }
@@ -286,26 +370,15 @@ import { articles } from '../data/articles';
     line-height: 1.9;
     color: var(--text-secondary);
   }
-  .prompt {
-    color: var(--accent);
-    margin-right: 0.4rem;
-  }
-  .output {
-    color: var(--text-tertiary);
-    padding-left: 1rem;
-  }
+  .prompt { color: var(--accent); margin-right: 0.4rem; }
+  .output { color: var(--text-tertiary); padding-left: 1rem; }
   .cursor {
     animation: blink 1s step-end infinite;
     color: var(--text-primary);
   }
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
 
-  /* Market mini */
-  .market-card {
-    padding: var(--space-4);
-  }
+  .market-card { padding: var(--space-4); }
   .market-head {
     display: flex;
     justify-content: space-between;
@@ -376,20 +449,15 @@ import { articles } from '../data/articles';
     border-top: 1px solid var(--border-subtle);
     height: 40px;
   }
-  .market-chart svg {
-    width: 100%;
-    height: 100%;
-  }
+  .market-chart svg { width: 100%; height: 100%; }
 
-  /* ---------- SECTIONS (unchanged) ---------- */
+  /* ============ SECTIONS ============ */
   .section {
     margin-top: var(--space-16);
     padding-top: var(--space-8);
     border-top: 1px solid var(--border-subtle);
   }
-  .section-head {
-    margin-bottom: var(--space-6);
-  }
+  .section-head { margin-bottom: var(--space-6); }
   .section-head h2 {
     font-size: 1.125rem;
     font-weight: 600;
@@ -492,10 +560,7 @@ import { articles } from '../data/articles';
     color: var(--positive);
   }
 
-  .post-list {
-    display: flex;
-    flex-direction: column;
-  }
+  .post-list { display: flex; flex-direction: column; }
   .post-row {
     display: block;
     padding: 1.25rem 0;
@@ -533,7 +598,7 @@ import { articles } from '../data/articles';
     line-height: 1.6;
   }
 
-  /* ---------- REVEAL ---------- */
+  /* ============ REVEAL ============ */
   .reveal {
     opacity: 0;
     transform: translateY(12px);
@@ -544,33 +609,40 @@ import { articles } from '../data/articles';
     transform: translateY(0);
   }
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
 
-  /* ---------- RESPONSIVE ---------- */
+  /* ============ RESPONSIVE ============ */
   @media (max-width: 900px) {
     .hero {
       grid-template-columns: 1fr;
       gap: var(--space-8);
     }
     .hero-text { max-width: none; }
-    .hero-visual {
-      max-width: 480px;
-    }
+    .hero-visual { max-width: 480px; }
   }
 
   @media (max-width: 640px) {
     .hero h1 { font-size: 1.75rem; }
     .hero-tagline { font-size: 1rem; }
     .learning-list { grid-template-columns: 1fr; }
-    .ticker-updated { display: none; }
     .working-head { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
     .hero-visual { max-width: none; }
     .terminal-body { font-size: 0.6875rem; }
+
+    .ticker {
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .ticker-label {
+      padding-right: var(--space-3);
+    }
+    .ticker-updated {
+      display: none;
+    }
+    .ticker-item {
+      padding-right: var(--space-4);
+    }
   }
 </style>
 
@@ -588,17 +660,33 @@ import { articles } from '../data/articles';
     });
   }
 
+  function revealPrice(priceId) {
+    const priceEl = document.getElementById(priceId);
+    if (priceEl) priceEl.classList.add('is-loaded');
+  }
+
+  function hideSkeleton(item) {
+    const skel = item.querySelector('[data-skeleton]');
+    if (skel) skel.classList.add('is-hidden');
+  }
+
   function setUnavailable() {
+    document.querySelectorAll('[data-market-item]').forEach((item) => {
+      hideSkeleton(item);
+    });
     ['btc', 'eth', 'sol', 'bnb'].forEach((id) => {
       const priceEl = document.getElementById(`${id}-price`);
       const changeEl = document.getElementById(`${id}-change`);
-      if (priceEl) priceEl.textContent = '—';
+      if (priceEl) {
+        priceEl.textContent = '—';
+        priceEl.hidden = false;
+        priceEl.classList.add('is-loaded');
+      }
       if (changeEl) {
         changeEl.textContent = '';
         changeEl.classList.remove('up', 'down');
       }
     });
-    // Hero mini
     ['hero-btc', 'hero-eth'].forEach((id) => {
       const priceEl = document.getElementById(`${id}-price`);
       const changeEl = document.getElementById(`${id}-change`);
@@ -636,15 +724,25 @@ import { articles } from '../data/articles';
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
 
-      // Main ticker
       const update = (id, priceId, changeId, decimals) => {
         const p = data[id]?.usd;
         const c = data[id]?.usd_24h_change;
         if (p == null || c == null) return;
+
         const priceEl = document.getElementById(priceId);
-        if (priceEl) priceEl.textContent = fmtPrice(p, decimals);
+        if (priceEl) {
+          priceEl.textContent = fmtPrice(p, decimals);
+          priceEl.hidden = false;
+          // Trigger fade in
+          requestAnimationFrame(() => priceEl.classList.add('is-loaded'));
+        }
         setChange(document.getElementById(changeId), c);
+
+        // Hide skeleton untuk item ini
+        const item = priceEl?.closest('[data-market-item]');
+        if (item) hideSkeleton(item);
       };
+
       update('bitcoin', 'btc-price', 'btc-change', 0);
       update('ethereum', 'eth-price', 'eth-change', 0);
       update('solana', 'sol-price', 'sol-change', 2);
