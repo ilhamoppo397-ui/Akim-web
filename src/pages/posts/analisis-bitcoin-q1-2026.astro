@@ -1,15 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { articles } from '../../data/articles';
+
+const currentSlug = 'analisis-bitcoin-q1-2026';
+const related = articles.filter((a) => a.slug !== currentSlug).slice(0, 2);
 ---
 
-<BaseLayout title="Analisis Bitcoin Q1 2026 — Akim">
+<BaseLayout title="Analisis Bitcoin Q1 2026 — Akim" description="Prediksi pergerakan BTC berdasarkan data on-chain dan analisis teknikal.">
   <div class="container">
     <article class="post">
       <a href="/blog" class="back-link">← Blog</a>
 
       <header class="post-header">
         <div class="post-meta">
-          <span class="post-tag">Crypto</span>
+          <span class="post-category">Crypto</span>
           <span class="post-dot">·</span>
           <span>15 Jan 2026</span>
           <span class="post-dot">·</span>
@@ -54,15 +58,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <strong>Disclaimer.</strong> Ini bukan saran investasi. Selalu lakukan riset sendiri.
         </div>
       </div>
+
+      <section class="related">
+        <h2>Catatan lain</h2>
+        <div class="related-list">
+          {related.map((post) => (
+            <a href={`/posts/${post.slug}`} class="related-item">
+              <span class="related-category">{post.category}</span>
+              <h3>{post.title}</h3>
+              <p>{post.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </article>
   </div>
 </BaseLayout>
 
 <style>
-  .post {
-    max-width: 640px;
-    margin: 0 auto;
-  }
+  .post { max-width: 720px; margin: 0 auto; }
 
   .back-link {
     display: inline-block;
@@ -70,17 +84,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     color: var(--text-tertiary);
     margin-bottom: var(--space-8);
   }
-
-  .back-link:hover {
-    color: var(--accent);
-  }
+  .back-link:hover { color: var(--accent); }
 
   .post-header {
     padding-bottom: var(--space-8);
     border-bottom: 1px solid var(--border-subtle);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-12);
   }
-
   .post-meta {
     display: flex;
     gap: var(--space-2);
@@ -91,52 +101,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-
-  .post-tag {
-    color: var(--accent);
-  }
-
-  .post-dot {
-    color: var(--text-quaternary);
-  }
+  .post-category { color: var(--accent); font-weight: 600; }
+  .post-dot { color: var(--text-quaternary); }
 
   .post-header h1 {
-    font-size: 2rem;
-    line-height: 1.2;
+    font-size: 2.25rem;
+    line-height: 1.15;
     margin-bottom: var(--space-4);
     letter-spacing: -0.02em;
   }
-
   .post-lead {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     color: var(--text-tertiary);
     margin: 0;
     line-height: 1.6;
   }
 
   .post-body {
-    font-size: 1rem;
-    line-height: 1.75;
+    font-size: 1.0625rem;
+    line-height: 1.8;
   }
-
   .post-body p {
     color: var(--text-secondary);
     margin-bottom: var(--space-6);
   }
-
   .post-body h2 {
-    font-size: 1.25rem;
+    font-size: 1.375rem;
     font-weight: 600;
     margin-top: var(--space-12);
     margin-bottom: var(--space-4);
     color: var(--text-primary);
   }
-
   .post-body strong {
     color: var(--text-primary);
     font-weight: 600;
   }
-
   .disclaimer {
     background: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
@@ -147,8 +146,64 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     color: var(--text-tertiary);
     margin-top: var(--space-8);
   }
+  .disclaimer strong { color: var(--warning); }
 
-  .disclaimer strong {
-    color: var(--warning);
+  /* Related */
+  .related {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .related h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin: 0 0 var(--space-6) 0;
+  }
+  .related-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .related-item {
+    display: block;
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: inherit;
+    transition: padding 0.2s ease;
+  }
+  .related-item:last-child { border-bottom: none; }
+  .related-item:hover { padding-left: var(--space-3); text-decoration: none; }
+  .related-item:hover h3 { color: var(--accent); }
+
+  .related-category {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+  .related-item h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-2) 0;
+    color: var(--text-primary);
+    transition: color 0.15s ease;
+  }
+  .related-item p {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .post-header h1 { font-size: 1.75rem; }
+    .post-body { font-size: 1rem; }
+    .post-lead { font-size: 1rem; }
   }
 </style>
