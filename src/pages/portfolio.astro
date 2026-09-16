@@ -3,10 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { projects } from '../data/projects';
 ---
 
-<BaseLayout title="Portofolio — Akim">
+<BaseLayout title="Portofolio — Akim" description="Project log Akim. Personal website, trading experiment, dan catatan kuliah.">
   <div class="container">
     <header class="page-header">
-      <p class="page-label">Portofolio</p>
+      <p class="page-label">Project Log</p>
       <h1>Yang sedang gue kerjakan</h1>
       <p class="page-lead">
         Proyek pribadi, eksperimen, dan catatan yang gue bangun sambil belajar.
@@ -14,42 +14,48 @@ import { projects } from '../data/projects';
     </header>
 
     <section class="project-list">
-      {projects.map((project) => (
+      {projects.map((project, i) => (
         <article class="project">
-          <div class="project-head">
-            <h2>{project.name}</h2>
-            <span class={`status status-${project.status.toLowerCase().replace(' ', '-')}`}>
-              {project.status}
-            </span>
-          </div>
-
-          <p class="project-desc">{project.description}</p>
-
-          <div class="project-meta">
-            <div class="meta-block">
-              <span class="meta-label">Tentang</span>
-              <p class="meta-value">{project.why}</p>
+          <div class="project-number">{String(i + 1).padStart(2, '0')}</div>
+          <div class="project-body">
+            <div class="project-head">
+              <div class="project-title-block">
+                <span class="project-category">{project.category}</span>
+                <h2>{project.name}</h2>
+              </div>
+              <span class={`status status-${project.status.toLowerCase().replace(' ', '-')}`}>
+                {project.status}
+              </span>
             </div>
-            <div class="meta-block">
-              <span class="meta-label">Yang gue pelajari</span>
-              <p class="meta-value">{project.learned.join(' · ')}</p>
-            </div>
-          </div>
 
-          <div class="project-tags">
-            {project.tech.map((t) => <span class="tag">{t}</span>)}
-          </div>
+            <p class="project-desc">{project.description}</p>
 
-          {(project.github || project.demo) && (
-            <div class="project-links">
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noopener">GitHub →</a>
-              )}
-              {project.demo && (
-                <a href={project.demo} target="_blank" rel="noopener">Live Demo →</a>
-              )}
+            <div class="project-meta">
+              <div class="meta-block">
+                <span class="meta-label">Tentang</span>
+                <p class="meta-value">{project.why}</p>
+              </div>
+              <div class="meta-block">
+                <span class="meta-label">Yang gue pelajari</span>
+                <p class="meta-value">{project.learned.join(' · ')}</p>
+              </div>
             </div>
-          )}
+
+            <div class="project-tags">
+              {project.tech.map((t) => <span class="tag">{t}</span>)}
+            </div>
+
+            {(project.github || project.demo) && (
+              <div class="project-links">
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener">GitHub →</a>
+                )}
+                {project.demo && (
+                  <a href={project.demo} target="_blank" rel="noopener">Live Demo →</a>
+                )}
+              </div>
+            )}
+          </div>
         </article>
       ))}
     </section>
@@ -61,14 +67,15 @@ import { projects } from '../data/projects';
     padding-bottom: var(--space-8);
     border-bottom: 1px solid var(--border-subtle);
     margin-bottom: var(--space-12);
+    max-width: 640px;
   }
   .page-label {
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     color: var(--text-tertiary);
     margin-bottom: var(--space-3);
-    font-weight: 500;
+    font-weight: 600;
   }
   .page-header h1 {
     font-size: 2.25rem;
@@ -78,35 +85,70 @@ import { projects } from '../data/projects';
     font-size: 1.0625rem;
     color: var(--text-tertiary);
     margin: 0;
+    line-height: 1.7;
   }
 
   .project-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-12);
+    border-top: 1px solid var(--border-subtle);
   }
 
   .project {
-    padding-bottom: var(--space-8);
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: var(--space-6);
+    padding: var(--space-8) 0;
     border-bottom: 1px solid var(--border-subtle);
+    transition: padding 0.2s ease;
   }
-  .project:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .project:hover {
+    padding-left: var(--space-3);
   }
+  .project:hover .project-number {
+    color: var(--accent);
+  }
+
+  .project-number {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-quaternary);
+    font-weight: 500;
+    padding-top: 4px;
+    transition: color 0.2s ease;
+  }
+
+  .project-body { min-width: 0; }
 
   .project-head {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: flex-start;
     gap: var(--space-4);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
+
+  .project-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .project-category {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
   .project h2 {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin: 0;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
   }
 
   .status {
@@ -117,6 +159,7 @@ import { projects } from '../data/projects';
     letter-spacing: 0.05em;
     font-weight: 500;
     white-space: nowrap;
+    flex-shrink: 0;
   }
   .status-live {
     background: rgba(16, 185, 129, 0.1);
@@ -142,7 +185,7 @@ import { projects } from '../data/projects';
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-6);
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-5);
   }
   .meta-block {
     padding-left: var(--space-4);
@@ -193,14 +236,21 @@ import { projects } from '../data/projects';
   }
 
   @media (max-width: 640px) {
-    .project-meta {
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
+    .project {
+      grid-template-columns: 40px 1fr;
+      gap: var(--space-3);
+      padding: var(--space-6) 0;
     }
+    .project-number { font-size: 0.75rem; }
     .project-head {
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-2);
     }
+    .project-meta {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .project h2 { font-size: 1.125rem; }
   }
 </style>

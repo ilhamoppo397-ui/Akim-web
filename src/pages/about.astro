@@ -4,13 +4,13 @@ import { profile } from '../data/profile';
 import { socials } from '../data/socials';
 ---
 
-<BaseLayout title="About — Akim" description="Kenalan sama Akim, mahasiswa Informatika yang suka ngulik code, crypto, dan Web3.">
+<BaseLayout title="About — Akim" description="Kenalin, gue Akim. Mahasiswa Informatika yang suka ngulik code, crypto, dan Web3.">
   <div class="container">
 
     <!-- HERO -->
     <header class="hero reveal">
       <p class="hero-label">About Me</p>
-      <h1>Kenalin Gue <span class="accent">Akim</span>.</h1>
+      <h1>Kenalin, gue <span class="accent">Akim</span>.</h1>
       <p class="hero-sub">
         Mahasiswa Informatika yang suka ngulik code, crypto, blockchain, Web3, dan trading.
       </p>
@@ -154,9 +154,7 @@ import { socials } from '../data/socials';
     margin-bottom: var(--space-6);
     font-weight: 700;
   }
-  .hero .accent {
-    color: var(--accent);
-  }
+  .hero .accent { color: var(--accent); }
   .hero-sub {
     font-size: 1.125rem;
     color: var(--text-tertiary);
@@ -185,11 +183,8 @@ import { socials } from '../data/socials';
     line-height: 1.75;
     margin-bottom: var(--space-4);
   }
-  .intro-text p:last-child {
-    margin-bottom: 0;
-  }
+  .intro-text p:last-child { margin-bottom: 0; }
 
-  /* Terminal visual */
   .terminal {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
@@ -207,11 +202,7 @@ import { socials } from '../data/socials';
     background: var(--bg-elevated);
     border-bottom: 1px solid var(--border-subtle);
   }
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
   .dot-red { background: #ff5f56; }
   .dot-yellow { background: #ffbd2e; }
   .dot-green { background: #27c93f; }
@@ -225,21 +216,13 @@ import { socials } from '../data/socials';
     line-height: 1.8;
     color: var(--text-secondary);
   }
-  .prompt {
-    color: var(--accent);
-    margin-right: 0.4rem;
-  }
-  .output {
-    color: var(--text-tertiary);
-    padding-left: 1rem;
-  }
+  .prompt { color: var(--accent); margin-right: 0.4rem; }
+  .output { color: var(--text-tertiary); padding-left: 1rem; }
   .cursor {
     animation: blink 1s step-end infinite;
     color: var(--text-primary);
   }
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
 
   /* ============ WHY ============ */
   .why {
@@ -294,9 +277,7 @@ import { socials } from '../data/socials';
     padding-bottom: var(--space-8);
     position: relative;
   }
-  .timeline-item:last-child {
-    padding-bottom: 0;
-  }
+  .timeline-item:last-child { padding-bottom: 0; }
   .timeline-item::before {
     content: '';
     position: absolute;
@@ -318,9 +299,7 @@ import { socials } from '../data/socials';
     color: var(--text-tertiary);
     font-weight: 500;
   }
-  .timeline-item-now .timeline-year {
-    color: var(--accent);
-  }
+  .timeline-item-now .timeline-year { color: var(--accent); }
   .timeline-content p {
     color: var(--text-secondary);
     margin: 0;
@@ -421,9 +400,7 @@ import { socials } from '../data/socials';
     border-bottom: 1px solid var(--border-subtle);
     font-size: 0.9375rem;
   }
-  .contact-list li:last-child {
-    border-bottom: none;
-  }
+  .contact-list li:last-child { border-bottom: none; }
   .contact-label {
     color: var(--text-tertiary);
     font-size: 0.8125rem;
@@ -431,7 +408,7 @@ import { socials } from '../data/socials';
     letter-spacing: 0.05em;
   }
 
-  /* ============ REVEAL ANIMATION ============ */
+  /* ============ REVEAL ============ */
   .reveal {
     opacity: 0;
     transform: translateY(12px);
@@ -442,11 +419,7 @@ import { socials } from '../data/socials';
     transform: translateY(0);
   }
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
 
   /* ============ RESPONSIVE ============ */
@@ -455,12 +428,8 @@ import { socials } from '../data/socials';
       grid-template-columns: 1fr;
       gap: var(--space-8);
     }
-    .hero h1 {
-      font-size: 2.25rem;
-    }
-    .hero-sub {
-      font-size: 1rem;
-    }
+    .hero h1 { font-size: 2.25rem; }
+    .hero-sub { font-size: 1rem; }
     .timeline-item {
       grid-template-columns: 90px 1fr;
       gap: var(--space-4);
@@ -468,9 +437,7 @@ import { socials } from '../data/socials';
   }
 
   @media (max-width: 640px) {
-    .hero h1 {
-      font-size: 1.875rem;
-    }
+    .hero h1 { font-size: 1.875rem; }
     .contact-list li {
       flex-direction: column;
       align-items: flex-start;
@@ -480,14 +447,11 @@ import { socials } from '../data/socials';
       grid-template-columns: 1fr;
       gap: var(--space-2);
     }
-    .timeline-year {
-      font-size: 0.75rem;
-    }
+    .timeline-year { font-size: 0.75rem; }
   }
 </style>
 
 <script>
-  // Reveal on scroll
   const els = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(

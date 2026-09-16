@@ -1,6 +1,7 @@
 export const projects = [
   {
     name: 'akim.web.id',
+    category: 'Personal Website',
     status: 'Live',
     description: 'Website pribadi yang sedang lu lihat ini. Dibuat dengan Astro v4, HTML, dan CSS murni. Deploy di Vercel.',
     tech: ['Astro', 'HTML/CSS', 'Vercel'],
@@ -11,6 +12,7 @@ export const projects = [
   },
   {
     name: 'Bot Trading Sederhana',
+    category: 'Trading Experiment',
     status: 'In Progress',
     description: 'Eksperimen pribadi untuk belajar menggunakan API market dan automation.',
     tech: ['Python', 'Binance API', 'Telegram Bot'],
@@ -21,6 +23,7 @@ export const projects = [
   },
   {
     name: 'Catatan Kuliah Informatika',
+    category: 'College Projects',
     status: 'Ongoing',
     description: 'Kumpulan catatan algoritma, struktur data, dan basis data yang gue tulis selama kuliah.',
     tech: ['Markdown', 'GitHub'],
