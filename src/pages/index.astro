@@ -36,19 +36,73 @@ import { articles } from '../data/articles';
 
     <!-- HERO -->
     <section class="hero reveal">
-      <h1>Haloo, gue {profile.name}. 👋</h1>
-      <p class="hero-tagline">
-        {profile.tagline}
-      </p>
-      <p class="hero-desc">
-        Di sini gue nulis catatan belajar, eksperimen kecil, dan opini soal
-        programming, crypto, blockchain, Web3, dan trading. Sesekali catatan
-        kuliah Informatika.
-      </p>
-      <div class="hero-cta">
-        <a href="/portfolio" class="btn">Lihat Project →</a>
-        <a href="/blog" class="btn-secondary">Baca Catatan</a>
+      <div class="hero-text">
+        <p class="hero-label">Personal Website</p>
+        <h1>Kenalin, gue {profile.name}. 👋</h1>
+        <p class="hero-tagline">
+          {profile.tagline}
+        </p>
+        <p class="hero-desc">
+          Di sini gue nulis catatan belajar, eksperimen kecil, dan opini soal
+          programming, crypto, blockchain, Web3, dan trading. Sesekali catatan
+          kuliah Informatika.
+        </p>
+        <div class="hero-cta">
+          <a href="/blog" class="btn">Baca Catatan →</a>
+          <a href="/portfolio" class="btn-secondary">Lihat Project</a>
+        </div>
       </div>
+
+      <aside class="hero-visual" aria-hidden="true">
+        <!-- Terminal mini -->
+        <div class="visual-card terminal-card">
+          <div class="terminal-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-title">akim@web:~</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="prompt">$</span> whoami</div>
+            <div class="output">akim — informatics student</div>
+            <div><span class="prompt">$</span> cat interests.txt</div>
+            <div class="output">code, crypto, web3, trading</div>
+            <div><span class="prompt">$</span> status</div>
+            <div class="output">learning... <span class="cursor">_</span></div>
+          </div>
+        </div>
+
+        <!-- Market mini -->
+        <div class="visual-card market-card">
+          <div class="market-head">
+            <span class="market-label">MARKET</span>
+            <span class="market-status">Live</span>
+          </div>
+          <div class="market-row">
+            <span class="market-symbol">BTC/USD</span>
+            <span class="market-price" id="hero-btc-price">—</span>
+            <span class="market-change" id="hero-btc-change"></span>
+          </div>
+          <div class="market-row">
+            <span class="market-symbol">ETH/USD</span>
+            <span class="market-price" id="hero-eth-price">—</span>
+            <span class="market-change" id="hero-eth-change"></span>
+          </div>
+          <div class="market-chart">
+            <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+              <polyline
+                points="0,30 20,28 40,25 60,27 80,22 100,24 120,18 140,20 160,15 180,17 200,12"
+                fill="none"
+                stroke="var(--accent)"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity="0.6"
+              />
+            </svg>
+          </div>
+        </div>
+      </aside>
     </section>
 
     <!-- CURRENTLY LEARNING -->
@@ -115,7 +169,7 @@ import { articles } from '../data/articles';
 </BaseLayout>
 
 <style>
-  /* ---------- TICKER ---------- */
+  /* ---------- TICKER (unchanged) ---------- */
   .ticker {
     display: flex;
     gap: var(--space-6);
@@ -134,36 +188,200 @@ import { articles } from '../data/articles';
     white-space: nowrap;
   }
 
-  /* ---------- HERO ---------- */
+  /* ---------- HERO (new: 2-column) ---------- */
   .hero {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: var(--space-12);
+    align-items: center;
     padding: var(--space-8) 0 var(--space-16);
-    max-width: 640px;
   }
-  .hero h1 {
-    font-size: 2.5rem;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
+
+  .hero-text { max-width: 560px; }
+
+  .hero-label {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
     margin-bottom: var(--space-4);
+    font-weight: 600;
   }
+
+  .hero h1 {
+    font-size: 2.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-5);
+    font-weight: 700;
+  }
+
   .hero-tagline {
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: var(--space-4);
   }
+
   .hero-desc {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     color: var(--text-tertiary);
     margin-bottom: var(--space-6);
     line-height: 1.7;
   }
+
   .hero-cta {
     display: flex;
     gap: var(--space-3);
     flex-wrap: wrap;
   }
 
-  /* ---------- SECTIONS ---------- */
+  /* ---------- HERO VISUAL ---------- */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .visual-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .visual-card:hover {
+    border-color: var(--border-default);
+    transform: translateY(-2px);
+  }
+
+  /* Terminal mini */
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-red { background: #ff5f56; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #27c93f; }
+  .terminal-title {
+    margin-left: auto;
+    font-size: 0.6875rem;
+    color: var(--text-quaternary);
+    font-family: var(--font-mono);
+  }
+  .terminal-body {
+    padding: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+  }
+  .prompt {
+    color: var(--accent);
+    margin-right: 0.4rem;
+  }
+  .output {
+    color: var(--text-tertiary);
+    padding-left: 1rem;
+  }
+  .cursor {
+    animation: blink 1s step-end infinite;
+    color: var(--text-primary);
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* Market mini */
+  .market-card {
+    padding: var(--space-4);
+  }
+  .market-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .market-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-quaternary);
+    font-weight: 600;
+  }
+  .market-status {
+    font-size: 0.625rem;
+    color: var(--positive);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+  .market-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--positive);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .market-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+  .market-symbol {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    min-width: 70px;
+  }
+  .market-price {
+    color: var(--text-primary);
+    font-weight: 500;
+    flex: 1;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .market-change {
+    font-size: 0.75rem;
+    min-width: 60px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .market-change.up { color: var(--positive); }
+  .market-change.down { color: var(--negative); }
+
+  .market-chart {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-subtle);
+    height: 40px;
+  }
+  .market-chart svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ---------- SECTIONS (unchanged) ---------- */
   .section {
     margin-top: var(--space-16);
     padding-top: var(--space-8);
@@ -199,7 +417,6 @@ import { articles } from '../data/articles';
   }
   .section-link:hover { color: var(--accent); }
 
-  /* ---------- LEARNING ---------- */
   .learning-list {
     list-style: none;
     padding: 0;
@@ -225,7 +442,6 @@ import { articles } from '../data/articles';
     font-size: 0.8125rem;
   }
 
-  /* ---------- WORKING ON ---------- */
   .working-list {
     list-style: none;
     padding: 0;
@@ -276,14 +492,13 @@ import { articles } from '../data/articles';
     color: var(--positive);
   }
 
-  /* ---------- POSTS ---------- */
   .post-list {
     display: flex;
     flex-direction: column;
   }
   .post-row {
     display: block;
-    padding: var(--space-5, 1.25rem) 0;
+    padding: 1.25rem 0;
     border-bottom: 1px solid var(--border-subtle);
     text-decoration: none;
     color: inherit;
@@ -337,24 +552,54 @@ import { articles } from '../data/articles';
   }
 
   /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+    .hero-text { max-width: none; }
+    .hero-visual {
+      max-width: 480px;
+    }
+  }
+
   @media (max-width: 640px) {
     .hero h1 { font-size: 1.75rem; }
     .hero-tagline { font-size: 1rem; }
     .learning-list { grid-template-columns: 1fr; }
     .ticker-updated { display: none; }
     .working-head { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
+    .hero-visual { max-width: none; }
+    .terminal-body { font-size: 0.6875rem; }
   }
 </style>
 
 <script>
   const API = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=usd&include_24hr_change=true';
-  const REFRESH_INTERVAL = 30000; // 30 detik
+  const REFRESH_INTERVAL = 30000;
   let lastUpdated = null;
   let retryCount = 0;
 
+  function fmtPrice(n, decimals) {
+    if (!isFinite(n)) return '—';
+    return '$' + n.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  }
+
   function setUnavailable() {
-    const ids = ['btc', 'eth', 'sol', 'bnb'];
-    ids.forEach((id) => {
+    ['btc', 'eth', 'sol', 'bnb'].forEach((id) => {
+      const priceEl = document.getElementById(`${id}-price`);
+      const changeEl = document.getElementById(`${id}-change`);
+      if (priceEl) priceEl.textContent = '—';
+      if (changeEl) {
+        changeEl.textContent = '';
+        changeEl.classList.remove('up', 'down');
+      }
+    });
+    // Hero mini
+    ['hero-btc', 'hero-eth'].forEach((id) => {
       const priceEl = document.getElementById(`${id}-price`);
       const changeEl = document.getElementById(`${id}-change`);
       if (priceEl) priceEl.textContent = '—';
@@ -364,24 +609,25 @@ import { articles } from '../data/articles';
       }
     });
     const updatedEl = document.getElementById('ticker-updated');
-    if (updatedEl) {
-      updatedEl.textContent = 'Harga lagi ga bisa diambil.';
-    }
+    if (updatedEl) updatedEl.textContent = 'Harga lagi ga bisa diambil.';
   }
 
   function updateTimestamp() {
     const updatedEl = document.getElementById('ticker-updated');
     if (!updatedEl || !lastUpdated) return;
     const diff = Math.floor((Date.now() - lastUpdated) / 1000);
-    if (diff < 30) {
-      updatedEl.textContent = 'Baru aja di-update';
-    } else if (diff < 60) {
-      updatedEl.textContent = `Update ${diff} detik lalu`;
-    } else if (diff < 3600) {
-      updatedEl.textContent = `Update ${Math.floor(diff / 60)} menit lalu`;
-    } else {
-      updatedEl.textContent = `Update ${Math.floor(diff / 3600)} jam lalu`;
-    }
+    if (diff < 30) updatedEl.textContent = 'Baru aja di-update';
+    else if (diff < 60) updatedEl.textContent = `Update ${diff} detik lalu`;
+    else if (diff < 3600) updatedEl.textContent = `Update ${Math.floor(diff / 60)} menit lalu`;
+    else updatedEl.textContent = `Update ${Math.floor(diff / 3600)} jam lalu`;
+  }
+
+  function setChange(el, c) {
+    if (!el) return;
+    const sign = c >= 0 ? '+' : '';
+    el.textContent = sign + c.toFixed(2) + '%';
+    el.classList.remove('up', 'down');
+    el.classList.add(c >= 0 ? 'up' : 'down');
   }
 
   async function loadPrices() {
@@ -390,32 +636,31 @@ import { articles } from '../data/articles';
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
 
+      // Main ticker
       const update = (id, priceId, changeId, decimals) => {
         const p = data[id]?.usd;
         const c = data[id]?.usd_24h_change;
         if (p == null || c == null) return;
-
         const priceEl = document.getElementById(priceId);
-        const changeEl = document.getElementById(changeId);
-
-        if (priceEl) {
-          priceEl.textContent = '$' + p.toLocaleString('en-US', {
-            minimumFractionDigits: decimals,
-            maximumFractionDigits: decimals,
-          });
-        }
-        if (changeEl) {
-          const sign = c >= 0 ? '+' : '';
-          changeEl.textContent = sign + c.toFixed(2) + '%';
-          changeEl.classList.remove('up', 'down');
-          changeEl.classList.add(c >= 0 ? 'up' : 'down');
-        }
+        if (priceEl) priceEl.textContent = fmtPrice(p, decimals);
+        setChange(document.getElementById(changeId), c);
       };
-
       update('bitcoin', 'btc-price', 'btc-change', 0);
       update('ethereum', 'eth-price', 'eth-change', 0);
       update('solana', 'sol-price', 'sol-change', 2);
       update('binancecoin', 'bnb-price', 'bnb-change', 2);
+
+      // Hero mini
+      const updateHero = (id, priceId, changeId, decimals) => {
+        const p = data[id]?.usd;
+        const c = data[id]?.usd_24h_change;
+        if (p == null || c == null) return;
+        const priceEl = document.getElementById(priceId);
+        if (priceEl) priceEl.textContent = fmtPrice(p, decimals);
+        setChange(document.getElementById(changeId), c);
+      };
+      updateHero('bitcoin', 'hero-btc-price', 'hero-btc-change', 0);
+      updateHero('ethereum', 'hero-eth-price', 'hero-eth-change', 0);
 
       lastUpdated = Date.now();
       retryCount = 0;
@@ -423,15 +668,13 @@ import { articles } from '../data/articles';
     } catch (e) {
       console.warn('Price fetch failed:', e);
       retryCount++;
-      if (retryCount >= 3) {
-        setUnavailable();
-      }
+      if (retryCount >= 3) setUnavailable();
     }
   }
 
   loadPrices();
   setInterval(loadPrices, REFRESH_INTERVAL);
-  setInterval(updateTimestamp, 10000); // update timestamp tiap 10 detik
+  setInterval(updateTimestamp, 10000);
 
   // Reveal on scroll
   const els = document.querySelectorAll('.reveal');
