@@ -5,10 +5,16 @@ const links = [
   { href: '/blog', label: 'Blog' },
   { href: '/portfolio', label: 'Portofolio' },
   { href: '/tools', label: 'Tools' },
+  { href: 'https://certificate.akim.web.id/certificate', label: 'Certificate' },
   { href: '/contact', label: 'Kontak' },
 ];
 
 const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href.startsWith('http')) return false;
+  return currentPath === href;
+}
 ---
 
 <header class="site-header">
@@ -24,7 +30,9 @@ const currentPath = Astro.url.pathname;
           <li>
             <a
               href={link.href}
-              class={currentPath === link.href ? 'active' : ''}
+              class={isActive(link.href) ? 'active' : ''}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener' : undefined}
             >
               {link.label}
             </a>
@@ -58,7 +66,9 @@ const currentPath = Astro.url.pathname;
         <li>
           <a
             href={link.href}
-            class={currentPath === link.href ? 'active' : ''}
+            class={isActive(link.href) ? 'active' : ''}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener' : undefined}
           >
             {link.label}
           </a>
@@ -130,7 +140,7 @@ const currentPath = Astro.url.pathname;
 
   .nav-desktop ul {
     display: flex;
-    gap: var(--space-5, 1.25rem);
+    gap: var(--space-4, 1rem);
     list-style: none;
     padding: 0;
     margin: 0;
@@ -140,6 +150,7 @@ const currentPath = Astro.url.pathname;
     font-size: 0.875rem;
     font-weight: 500;
     transition: color 0.15s ease;
+    white-space: nowrap;
   }
   .nav-desktop a:hover,
   .nav-desktop a.active {
@@ -214,7 +225,6 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
-  // Mobile menu toggle
   const toggle = document.querySelector('[data-menu-toggle]');
   const menu = document.querySelector('[data-mobile-menu]');
 
@@ -234,7 +244,6 @@ const currentPath = Astro.url.pathname;
     });
   }
 
-  // Theme toggle
   const themeBtn = document.querySelector('[data-theme-toggle]');
   if (themeBtn) {
     themeBtn.addEventListener('click', () => {
