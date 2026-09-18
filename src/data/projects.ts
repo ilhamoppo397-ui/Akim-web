@@ -22,6 +22,17 @@ export const projects = [
     demo: null,
   },
   {
+    name: 'Blockchain Digital Certificate',
+    category: 'Blockchain Project',
+    status: 'In Progress',
+    description: 'Sistem sertifikat digital dengan mekanisme verifikasi berbasis blockchain dan smart contract.',
+    tech: ['Solidity', 'Hardhat', 'Ethers.js', 'Astro'],
+    why: 'Belajar gimana blockchain bisa dipakai buat nyimpen dan verifikasi sertifikat digital.',
+    learned: ['Solidity', 'Smart Contract', 'Hardhat', 'Ethers.js', 'Blockchain Integration'],
+    github: 'https://github.com/ilhamoppo397-ui/sertifikat-digital',
+    demo: null,
+  },
+  {
     name: 'Catatan Kuliah Informatika',
     category: 'College Projects',
     status: 'Ongoing',
